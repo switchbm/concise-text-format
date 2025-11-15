@@ -1,0 +1,53 @@
+{
+  "application": {
+    "name": "MyApp",
+    "version": "2.5.1",
+    "environment": "production",
+    "debug": false
+  },
+  "database": {
+    "host": "db.example.com",
+    "port": 5432,
+    "name": "myapp_prod",
+    "ssl": true,
+    "pool": {
+      "min": 2,
+      "max": 10,
+      "idle_timeout": 30000
+    }
+  },
+  "cache": {
+    "enabled": true,
+    "type": "redis",
+    "host": "cache.example.com",
+    "port": 6379,
+    "ttl": 3600
+  },
+  "features": {
+    "authentication": true,
+    "notifications": true,
+    "analytics": true,
+    "beta_features": false
+  },
+  "limits": {
+    "max_users": 10000,
+    "max_requests_per_minute": 1000,
+    "max_file_size_mb": 50
+  },
+  "integrations": {
+    "stripe": {
+      "enabled": true,
+      "public_key": "pk_live_XXXXXXXXXXXX",
+      "webhook_secret": "whsec_XXXXXXXXXXXX"
+    },
+    "sendgrid": {
+      "enabled": true,
+      "api_key": "SG.XXXXXXXXXXXX",
+      "from_email": "noreply@example.com"
+    },
+    "slack": {
+      "enabled": false,
+      "webhook_url": null
+    }
+  }
+}

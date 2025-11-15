@@ -1,0 +1,42 @@
+{
+  "name": "ctf-format",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Compressed Text Format - Ultra-efficient data serialization for LLM prompts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ctf-format/ctf.git"
+  },
+  "keywords": [
+    "serialization",
+    "llm",
+    "data-format",
+    "compression",
+    "tokens"
+  ],
+  "author": "CTF Format Team",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "eslint packages/**/src/**/*.ts",
+    "format": "prettier --write \"packages/**/src/**/*.ts\"",
+    "benchmark": "node benchmarks/scripts/run-all.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
