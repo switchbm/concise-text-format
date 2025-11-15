@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ctf-format"
+version = "1.0.0"
+description = "Compressed Text Format - Ultra-efficient data serialization for LLM prompts"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "CTF Format Team"}
+]
+keywords = ["serialization", "llm", "data-format", "compression", "tokens"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "mypy>=1.0.0",
+    "ruff>=0.1.0",
+]
+benchmark = [
+    "tiktoken>=0.5.0",
+]
+
+[project.scripts]
+ctf = "ctf.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ctf-format/ctf"
+Documentation = "https://github.com/ctf-format/ctf#readme"
+Repository = "https://github.com/ctf-format/ctf"
+Issues = "https://github.com/ctf-format/ctf/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ctf*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=ctf --cov-report=term-missing"
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+select = ["E", "F", "W", "I", "N", "UP", "YTT", "S", "B", "A", "C4", "T10", "ICN", "PIE", "PYI", "PT", "RET", "SIM", "ARG", "PL", "RUF"]
+ignore = ["S101"]  # Allow assert in tests
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true

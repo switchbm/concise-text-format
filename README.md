@@ -23,12 +23,19 @@ CTF (Compressed Text Format) is a data serialization format designed specificall
 
 ### Installation
 
+**TypeScript/JavaScript:**
 ```bash
 npm install @ctf-format/core
 ```
 
+**Python:**
+```bash
+pip install ctf-format
+```
+
 ### Basic Usage
 
+**TypeScript:**
 ```typescript
 import { encode, decode } from '@ctf-format/core';
 
@@ -53,8 +60,33 @@ const decoded = decode(ctf);
 // decoded === data ✓
 ```
 
+**Python:**
+```python
+from ctf import encode, decode
+
+data = {
+    "users": [
+        {"id": 1, "name": "Alice", "role": "admin"},
+        {"id": 2, "name": "Bob", "role": "user"},
+        {"id": 3, "name": "Charlie", "role": "dev"},
+    ]
+}
+
+ctf_output = encode(data)
+print(ctf_output)
+# Output:
+# users@3|id,name,role:
+#   1|Alice|admin
+#   2|Bob|user
+#   3|Charlie|dev
+
+decoded = decode(ctf_output)
+# decoded == data ✓
+```
+
 ### CLI Usage
 
+**TypeScript/JavaScript:**
 ```bash
 # Install CLI globally
 npm install -g @ctf-format/cli
@@ -67,6 +99,21 @@ ctf decode data.ctf -o data.json
 
 # Show statistics
 ctf encode data.json --stats
+```
+
+**Python:**
+```bash
+# Install package
+pip install ctf-format
+
+# Encode JSON to CTF
+python -m ctf.cli encode data.json -o data.ctf
+
+# Decode CTF to JSON
+python -m ctf.cli decode data.ctf -o data.json
+
+# Show statistics
+python -m ctf.cli encode data.json --stats
 ```
 
 ## Format Examples
@@ -318,6 +365,29 @@ Encoding and decoding are highly optimized:
 | Decode | 100K rows | <1s |
 
 Memory usage: O(n) space complexity
+
+## Language Support
+
+CTF has official implementations in multiple languages:
+
+### TypeScript/JavaScript
+- **Package:** `@ctf-format/core` (npm)
+- **CLI:** `@ctf-format/cli` (npm)
+- **Status:** ✅ Production-ready, 53 tests passing
+- **Documentation:** [packages/ctf-core/README.md](packages/ctf-core/README.md)
+
+### Python
+- **Package:** `ctf-format` (PyPI)
+- **Status:** ✅ Production-ready, 51 tests passing
+- **Documentation:** [python/README.md](python/README.md)
+- **Install:** `pip install ctf-format`
+
+Both implementations:
+- Share the same [specification](SPECIFICATION.md)
+- Produce identical output
+- Support full round-trip encoding/decoding
+- Include comprehensive test suites
+- Provide CLI tools
 
 ## Contributing
 
