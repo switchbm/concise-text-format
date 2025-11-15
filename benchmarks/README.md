@@ -10,6 +10,8 @@ This directory contains benchmark datasets and scripts to measure the token effi
 
 ## Running Benchmarks
 
+### Token Count Benchmarks
+
 ```bash
 # Install dependencies first
 cd ../
@@ -18,9 +20,31 @@ npm install
 # Build the project
 npm run build
 
-# Run token count benchmark
-node benchmarks/scripts/token-count.js
+# Run character-based token count estimation
+npm run benchmark
+
+# Run REAL token count with GPT-4 tokenizer
+npm run benchmark:real
 ```
+
+### LLM Comprehension Tests
+
+Test how well LLMs understand CTF vs JSON:
+
+```bash
+# Set API key (choose one)
+export OPENAI_API_KEY="sk-..."
+export ANTHROPIC_API_KEY="sk-ant-..."
+
+# Run LLM comprehension tests
+npm run llm:test:openai        # Test with OpenAI
+npm run llm:test:anthropic     # Test with Anthropic
+
+# Generate questions only (no LLM calls)
+npm run llm:questions
+```
+
+See [llm-tests/README.md](llm-tests/README.md) for detailed documentation.
 
 ## Metrics
 

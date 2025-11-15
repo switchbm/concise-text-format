@@ -26,7 +26,11 @@
     "lint": "eslint packages/**/src/**/*.ts",
     "format": "prettier --write \"packages/**/src/**/*.ts\"",
     "benchmark": "node benchmarks/scripts/token-count.js",
-    "benchmark:real": "node benchmarks/scripts/real-token-count.js"
+    "benchmark:real": "node benchmarks/scripts/real-token-count.js",
+    "llm:test": "node benchmarks/llm-tests/runner.js",
+    "llm:test:openai": "node benchmarks/llm-tests/runner.js openai",
+    "llm:test:anthropic": "node benchmarks/llm-tests/runner.js anthropic",
+    "llm:questions": "node benchmarks/llm-tests/generate-questions.js"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
