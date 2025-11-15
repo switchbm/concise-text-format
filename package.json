@@ -30,6 +30,8 @@
     "llm:test": "node benchmarks/llm-tests/runner.js",
     "llm:test:openai": "node benchmarks/llm-tests/runner.js openai",
     "llm:test:anthropic": "node benchmarks/llm-tests/runner.js anthropic",
+    "llm:test:judge": "node benchmarks/llm-tests/runner.js openai config 10 --judge",
+    "llm:test:both": "node benchmarks/llm-tests/runner.js openai config 10 --both",
     "llm:questions": "node benchmarks/llm-tests/generate-questions.js"
   },
   "devDependencies": {

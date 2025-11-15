@@ -8,7 +8,7 @@ The test framework:
 - **Generates questions** automatically from datasets
 - **Tests multiple LLM providers** (OpenAI, Anthropic, etc.)
 - **Compares comprehension** between JSON and CTF formats
-- **Uses type-aware validation** for deterministic results (not LLM-as-judge)
+- **Flexible validation modes**: Type-aware (fast), LLM-as-judge (flexible), or both (compare)
 - **Measures both accuracy and token efficiency**
 
 ## Quick Start
@@ -48,6 +48,31 @@ Test specific dataset with limited questions:
 node benchmarks/llm-tests/runner.js openai config 10
 ```
 
+### Validation Modes
+
+The framework supports three validation modes:
+
+**Type-Aware (Default)** - Fast, deterministic validation:
+```bash
+npm run llm:test:openai
+# or
+node benchmarks/llm-tests/runner.js openai
+```
+
+**LLM-as-Judge** - Uses LLM to evaluate correctness (slower, more expensive but flexible):
+```bash
+npm run llm:test:judge
+# or
+node benchmarks/llm-tests/runner.js openai config 10 --judge
+```
+
+**Both** - Run both validation methods and compare results:
+```bash
+npm run llm:test:both
+# or
+node benchmarks/llm-tests/runner.js openai config 10 --both
+```
+
 ### Generate Questions Only
 
 To see what questions will be asked without running LLM tests:
@@ -70,7 +95,8 @@ llm-tests/
 │   ├── anthropic.js   # Anthropic implementation
 │   └── index.js       # Provider registry
 ├── validators/         # Response validation
-│   └── type-aware.js  # Type-aware validator
+│   ├── type-aware.js  # Fast deterministic validator
+│   └── llm-judge.js   # LLM-as-judge validator
 ├── questions/         # Question generation
 │   └── generator.js   # Automatic question generator
 ├── runner.js          # Main test runner
@@ -196,6 +222,62 @@ The validator:
 - Handles JSON, quoted strings, numbers, booleans
 - Performs type-aware comparison
 - Supports fuzzy matching for partial credit
+
+## LLM-as-Judge Validation
+
+For more flexible validation, you can use LLM-as-judge mode:
+
+```javascript
+import { validateWithJudge } from './validators/llm-judge.js';
+import { createProvider } from './providers/index.js';
+
+const provider = createProvider('openai');
+
+const result = await validateWithJudge(
+  'What is the capital of France?',  // Question
+  'Paris is the capital',             // LLM response
+  'Paris',                            // Expected answer
+  provider
+);
+
+console.log(result.verdict);    // 'CORRECT' | 'INCORRECT' | 'PARTIAL'
+console.log(result.correct);    // true/false
+console.log(result.confidence); // 0.0-1.0
+console.log(result.reason);     // Explanation
+```
+
+### Validation Mode Comparison
+
+When using `--both` mode, you get a comparison between validation methods:
+
+```
+VALIDATION METHOD COMPARISON
+----------------------------------------------------------------------
+
+JSON Format:
+  Agreement Rate: 90.0%
+  Type-Aware: 95.0%
+  LLM Judge: 92.5%
+
+CTF Format:
+  Agreement Rate: 85.0%
+  Type-Aware: 90.0%
+  LLM Judge: 88.0%
+```
+
+**When to use each mode:**
+
+- **Type-Aware**: Production testing, CI/CD, cost-sensitive scenarios
+  - Pros: Fast, free, deterministic, reproducible
+  - Cons: Strict matching, may miss semantically correct answers
+
+- **LLM-Judge**: Research, exploratory testing, handling varied responses
+  - Pros: Flexible, handles rephrasing, catches semantic correctness
+  - Cons: Slow, expensive, non-deterministic, requires API calls
+
+- **Both**: Validation development, understanding edge cases
+  - Pros: See where methods disagree, calibrate validation
+  - Cons: 2x the LLM costs
 
 ## Test Output
 

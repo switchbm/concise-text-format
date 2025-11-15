@@ -37,8 +37,10 @@ export OPENAI_API_KEY="sk-..."
 export ANTHROPIC_API_KEY="sk-ant-..."
 
 # Run LLM comprehension tests
-npm run llm:test:openai        # Test with OpenAI
+npm run llm:test:openai        # Test with OpenAI (type-aware validation)
 npm run llm:test:anthropic     # Test with Anthropic
+npm run llm:test:judge         # Test with LLM-as-judge validation
+npm run llm:test:both          # Compare type-aware vs LLM-judge
 
 # Generate questions only (no LLM calls)
 npm run llm:questions

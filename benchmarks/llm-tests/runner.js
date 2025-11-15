@@ -14,6 +14,7 @@ import { encode as encodeTokens } from 'gpt-tokenizer';
 import { createProvider } from './providers/index.js';
 import { generateQuestions, filterQuestions } from './questions/generator.js';
 import { validateBatch } from './validators/type-aware.js';
+import { validateBatchWithJudge, compareValidationMethods } from './validators/llm-judge.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -25,7 +26,8 @@ async function runDatasetTest(data, datasetName, provider, options = {}) {
   const {
     maxQuestions = 20,
     format = 'json', // 'json' or 'ctf'
-    optimize = 'balanced'
+    optimize = 'balanced',
+    judgeMode = 'type-aware' // 'type-aware', 'llm-judge', or 'both'
   } = options;
 
   console.log(`\nTesting ${datasetName} with ${format.toUpperCase()} format...`);
@@ -83,6 +85,7 @@ Please provide a concise answer. If the answer is a specific value, provide just
       totalOutputTokens += outputTokens;
 
       results.push({
+        question: question.question,
         response,
         expected: question.answer,
         questionType: question.type
@@ -92,6 +95,7 @@ Please provide a concise answer. If the answer is a specific value, provide just
     } catch (error) {
       process.stdout.write(` ✗ (${error.message})\n`);
       results.push({
+        question: question.question,
         response: '',
         expected: question.answer,
         questionType: question.type,
@@ -103,8 +107,42 @@ Please provide a concise answer. If the answer is a specific value, provide just
     await new Promise(resolve => setTimeout(resolve, 100));
   }
 
-  // Validate results
-  const validation = validateBatch(results);
+  // Validate results based on judge mode
+  let validation, judgeValidation, comparison;
+
+  if (judgeMode === 'type-aware' || judgeMode === 'both') {
+    console.log('\nValidating with type-aware method...');
+    validation = validateBatch(results);
+  }
+
+  if (judgeMode === 'llm-judge' || judgeMode === 'both') {
+    console.log('\nValidating with LLM-as-judge...');
+    judgeValidation = await validateBatchWithJudge(results, provider);
+
+    if (judgeMode === 'llm-judge') {
+      validation = judgeValidation;
+    }
+  }
+
+  if (judgeMode === 'both') {
+    console.log('\nComparing validation methods...');
+    comparison = compareValidationMethods(validation, judgeValidation);
+
+    console.log(`Agreement Rate: ${(comparison.agreementRate * 100).toFixed(1)}%`);
+    console.log(`Type-Aware Accuracy: ${(comparison.typeAwareAccuracy * 100).toFixed(1)}%`);
+    console.log(`LLM Judge Accuracy: ${(comparison.judgeAccuracy * 100).toFixed(1)}%`);
+    console.log(`LLM Judge (with partial): ${(comparison.judgeAccuracyWithPartial * 100).toFixed(1)}%`);
+
+    if (comparison.disagreements > 0) {
+      console.log(`\nDisagreements: ${comparison.disagreements}`);
+    }
+  }
+
+  // Calculate total cost including judge costs
+  let totalCost = provider.estimateCost(totalInputTokens, totalOutputTokens, provider.defaultModel);
+  if (judgeValidation) {
+    totalCost += judgeValidation.judgeCost;
+  }
 
   return {
     dataset: datasetName,
@@ -118,9 +156,12 @@ Please provide a concise answer. If the answer is a specific value, provide just
     dataTokens: tokens,
     inputTokens: totalInputTokens,
     outputTokens: totalOutputTokens,
-    cost: provider.estimateCost(totalInputTokens, totalOutputTokens, provider.defaultModel),
+    cost: totalCost,
     validations: validation.validations,
-    questions: questions
+    questions: questions,
+    judgeMode,
+    judgeValidation,
+    comparison
   };
 }
 
@@ -147,7 +188,7 @@ async function compareFormats(data, datasetName, provider, options = {}) {
 
   // Print comparison
   console.log(`\n${'-'.repeat(70)}`);
-  console.log('COMPARISON');
+  console.log(`COMPARISON (Validation: ${options.judgeMode})`);
   console.log('-'.repeat(70));
 
   console.log(`\nFormat          Accuracy   Confidence   Data Tokens   Cost`);
@@ -163,6 +204,22 @@ async function compareFormats(data, datasetName, provider, options = {}) {
 
   console.log(formatRow(jsonResults));
   console.log(formatRow(ctfResults));
+
+  // Show judge comparison if both methods used
+  if (options.judgeMode === 'both' && jsonResults.comparison && ctfResults.comparison) {
+    console.log(`\n${'-'.repeat(70)}`);
+    console.log('VALIDATION METHOD COMPARISON');
+    console.log('-'.repeat(70));
+    console.log(`\nJSON Format:`);
+    console.log(`  Agreement Rate: ${(jsonResults.comparison.agreementRate * 100).toFixed(1)}%`);
+    console.log(`  Type-Aware: ${(jsonResults.comparison.typeAwareAccuracy * 100).toFixed(1)}%`);
+    console.log(`  LLM Judge: ${(jsonResults.comparison.judgeAccuracy * 100).toFixed(1)}%`);
+
+    console.log(`\nCTF Format:`);
+    console.log(`  Agreement Rate: ${(ctfResults.comparison.agreementRate * 100).toFixed(1)}%`);
+    console.log(`  Type-Aware: ${(ctfResults.comparison.typeAwareAccuracy * 100).toFixed(1)}%`);
+    console.log(`  LLM Judge: ${(ctfResults.comparison.judgeAccuracy * 100).toFixed(1)}%`);
+  }
 
   // Calculate improvements
   const tokenSavings = ((jsonResults.dataTokens - ctfResults.dataTokens) / jsonResults.dataTokens * 100).toFixed(1);
@@ -195,13 +252,64 @@ async function main() {
   const args = process.argv.slice(2);
 
   // Parse arguments
-  const providerName = args[0] || 'openai';
-  const datasetFilter = args[1];
-  const maxQuestions = parseInt(args[2]) || 20;
+  let providerName = 'openai';
+  let datasetFilter = null;
+  let maxQuestions = 20;
+  let judgeMode = 'type-aware';
+
+  // Parse flags and positional arguments
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+
+    if (arg === '--judge' || arg === '-j') {
+      judgeMode = 'llm-judge';
+    } else if (arg === '--both' || arg === '-b') {
+      judgeMode = 'both';
+    } else if (arg === '--help' || arg === '-h') {
+      console.log(`
+CTF LLM Comprehension Test
+
+Usage: node runner.js [provider] [dataset] [questions] [options]
+
+Arguments:
+  provider   LLM provider (openai, anthropic) [default: openai]
+  dataset    Dataset to test (config, ecommerce, employees) [default: all]
+  questions  Max questions per dataset [default: 20]
+
+Options:
+  -j, --judge    Use LLM-as-judge validation (slower, more expensive)
+  -b, --both     Use both type-aware and LLM-judge (compare methods)
+  -h, --help     Show this help message
+
+Validation Modes:
+  type-aware     Fast, deterministic validation (default)
+  llm-judge      Use LLM to judge correctness (more flexible, expensive)
+  both           Run both methods and compare results
+
+Examples:
+  node runner.js openai                    # Test all datasets with OpenAI
+  node runner.js anthropic config 10       # Test config with 10 questions
+  node runner.js openai config 20 --judge  # Use LLM-as-judge
+  node runner.js openai --both             # Compare validation methods
+
+Environment Variables:
+  OPENAI_API_KEY      OpenAI API key
+  ANTHROPIC_API_KEY   Anthropic API key
+`);
+      process.exit(0);
+    } else if (!providerName || providerName === 'openai') {
+      providerName = arg;
+    } else if (!datasetFilter) {
+      datasetFilter = arg;
+    } else if (!maxQuestions || maxQuestions === 20) {
+      maxQuestions = parseInt(arg) || 20;
+    }
+  }
 
   console.log('CTF LLM Comprehension Test');
   console.log('='.repeat(70));
   console.log(`Provider: ${providerName}`);
+  console.log(`Validation Mode: ${judgeMode}`);
   console.log(`Max questions per dataset: ${maxQuestions}`);
   console.log('='.repeat(70));
 
@@ -248,7 +356,7 @@ async function main() {
   // Run tests
   const allResults = [];
   for (const [name, data] of Object.entries(datasets)) {
-    const result = await compareFormats(data, name, provider, { maxQuestions });
+    const result = await compareFormats(data, name, provider, { maxQuestions, judgeMode });
     allResults.push(result);
   }
 

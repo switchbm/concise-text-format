@@ -237,8 +237,10 @@ Run benchmarks yourself:
 npm run benchmark:real
 
 # LLM comprehension tests (requires API key)
-npm run llm:test:openai
-npm run llm:test:anthropic
+npm run llm:test:openai     # Type-aware validation (fast)
+npm run llm:test:anthropic  # Anthropic provider
+npm run llm:test:judge      # LLM-as-judge validation (flexible)
+npm run llm:test:both       # Compare validation methods
 ```
 
 See [benchmarks/README.md](benchmarks/README.md) for detailed results.
