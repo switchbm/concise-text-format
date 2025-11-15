@@ -34,8 +34,8 @@ export function isPrimitive(value: unknown): value is string | number | boolean 
  * Check if a string needs quoting in CTF format
  */
 export function needsQuoting(str: string): boolean {
-  // Quote if contains special characters or starts with digits
-  return /[:|\t\n\r"\[\]{},^@]/.test(str) || /^\d/.test(str) || str.includes('  ');
+  // Quote if contains special characters, spaces, or starts with digits
+  return /[:|\t\n\r"\[\]{},^@ ]/.test(str) || /^\d/.test(str);
 }
 
 /**

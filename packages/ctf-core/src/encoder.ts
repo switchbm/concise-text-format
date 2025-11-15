@@ -75,7 +75,12 @@ export class CTFEncoder {
     }
 
     // Encode main data
-    lines.push(...this.encodeValue(value, '', 0));
+    // For top-level arrays, wrap with a default key
+    if (isArray(value)) {
+      lines.push(...this.encodeValue(value, 'data', 0));
+    } else {
+      lines.push(...this.encodeValue(value, '', 0));
+    }
 
     return lines.join('\n');
   }

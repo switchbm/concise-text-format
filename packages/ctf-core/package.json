@@ -2,6 +2,7 @@
   "name": "@ctf-format/core",
   "version": "1.0.0",
   "description": "Core encoder/decoder for Compressed Text Format (CTF)",
+  "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {

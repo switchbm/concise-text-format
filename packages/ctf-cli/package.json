@@ -2,6 +2,7 @@
   "name": "@ctf-format/cli",
   "version": "1.0.0",
   "description": "CLI tool for Compressed Text Format (CTF)",
+  "type": "module",
   "bin": {
     "ctf": "./dist/cli.js"
   },

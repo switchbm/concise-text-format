@@ -86,8 +86,9 @@ export class CTFDecoder {
   /**
    * Parse a value at the current context
    */
-  private parseValue(context: ParseContext, baseIndent: number): JsonValue {
+  private parseValue(context: ParseContext, minIndent: number): JsonValue {
     const result: JsonObject = {};
+    let expectedIndent: number | null = null;
 
     while (context.currentLine < context.lines.length) {
       const line = context.lines[context.currentLine];
@@ -100,13 +101,18 @@ export class CTFDecoder {
 
       const indent = this.getIndentLevel(line);
 
-      // If indent is less than base, we're done with this level
-      if (indent < baseIndent) {
+      // If indent is less than minimum, we're done with this level
+      if (indent < minIndent) {
         break;
       }
 
-      // If indent is greater than base, skip (will be handled by nested parse)
-      if (indent > baseIndent) {
+      // Set expected indent from first line we encounter
+      if (expectedIndent === null) {
+        expectedIndent = indent;
+      }
+
+      // Only process lines at the expected indent level
+      if (indent !== expectedIndent) {
         break;
       }
 
@@ -126,19 +132,22 @@ export class CTFDecoder {
       const valuePart = trimmed.substring(colonIndex + 1);
 
       // Check for array notation
-      const arrayMatch = keyPart.match(/^(.+?)@(\d+)(\|{1,2})(.*?)$/);
+      const arrayMatch = keyPart.match(/^(.+?)@(\d+)(?:(\|{1,2}|,|\t)(.*))?$/);
       if (arrayMatch) {
         const key = arrayMatch[1];
         const count = parseInt(arrayMatch[2], 10);
         const delimiter = arrayMatch[3];
-        const fields = arrayMatch[4];
+        const fields = arrayMatch[4] || '';
 
         context.currentLine++;
 
-        if (delimiter === '||') {
+        // Handle empty arrays
+        if (count === 0) {
+          result[key] = [];
+        } else if (delimiter === '||') {
           // Columnar array
           result[key] = this.parseColumnarArray(context, count, fields, indent);
-        } else {
+        } else if (delimiter) {
           // Tabular array
           result[key] = this.parseTabularArray(
             context,
@@ -147,13 +156,16 @@ export class CTFDecoder {
             delimiter,
             indent
           );
+        } else {
+          // List array (no delimiter means list format)
+          result[key] = this.parseListArray(context, count, indent);
         }
       } else {
         // Regular key:value
         context.currentLine++;
 
         if (valuePart === '') {
-          // Nested object
+          // Nested object - recursively parse with increased minimum indent
           result[keyPart] = this.parseValue(context, indent + 1);
         } else {
           // Primitive or inline array
@@ -289,6 +301,55 @@ export class CTFDecoder {
         }
       }
       result.push(obj);
+    }
+
+    return result;
+  }
+
+  /**
+   * Parse list array (non-uniform or non-tabular arrays)
+   */
+  private parseListArray(
+    context: ParseContext,
+    count: number,
+    _baseIndent: number
+  ): JsonArray {
+    const result: JsonArray = [];
+
+    for (let i = 0; i < count; i++) {
+      if (context.currentLine >= context.lines.length) {
+        if (context.options.validate) {
+          throw new CTFValidationError(
+            `Expected ${count} array items, but only found ${i}`
+          );
+        }
+        break;
+      }
+
+      const line = context.lines[context.currentLine];
+
+      // Skip empty lines
+      if (line.trim() === '') {
+        context.currentLine++;
+        i--;
+        continue;
+      }
+
+      const trimmed = line.trim();
+
+      // Each item should start with -:
+      if (!trimmed.startsWith('-:')) {
+        throw new CTFParseError(
+          `Expected list array item to start with '-:', got: ${trimmed}`,
+          context.currentLine + 1
+        );
+      }
+
+      context.currentLine++;
+
+      // Parse the item's content (nested content is indented more than the dash line)
+      const itemValue = this.parseValue(context, this.getIndentLevel(line) + 1);
+      result.push(itemValue);
     }
 
     return result;

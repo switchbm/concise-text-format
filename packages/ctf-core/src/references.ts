@@ -3,7 +3,7 @@
  */
 
 import { JsonValue, ReferenceEntry } from './types.js';
-import { isObject, isArray } from './utils.js';
+import { isObject, isArray, escapeString } from './utils.js';
 
 export class ReferenceManager {
   private references: Map<string, number> = new Map();
@@ -118,10 +118,7 @@ export class ReferenceManager {
    * Escape a value for reference definition
    */
   private escapeValue(value: string): string {
-    if (/[:|\t\n\r"^@]/.test(value) || value.includes('  ')) {
-      return '"' + value.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
-    }
-    return value;
+    return escapeString(value);
   }
 
   /**
