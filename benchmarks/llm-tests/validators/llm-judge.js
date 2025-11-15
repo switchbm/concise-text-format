@@ -145,7 +145,7 @@ export async function validateBatchWithJudge(testCases, provider, options = {}) 
   const total = validations.length;
   const accuracy = total > 0 ? correct / total : 0;
   const accuracyWithPartial = total > 0 ? (correct + partial * 0.5) / total : 0;
-  const avgConfidence = validations.reduce((sum, v) => sum + v.confidence, 0) / total;
+  const avgConfidence = total > 0 ? validations.reduce((sum, v) => sum + v.confidence, 0) / total : 0;
 
   return {
     accuracy,
@@ -176,7 +176,13 @@ export function compareValidationMethods(typeAwareResults, judgeResults) {
   const agreements = [];
   const disagreements = [];
 
-  for (let i = 0; i < typeAwareResults.validations.length; i++) {
+  // Ensure both have same number of validations
+  const minLength = Math.min(
+    typeAwareResults.validations.length,
+    judgeResults.validations.length
+  );
+
+  for (let i = 0; i < minLength; i++) {
     const typeAware = typeAwareResults.validations[i];
     const judge = judgeResults.validations[i];
 
@@ -193,13 +199,13 @@ export function compareValidationMethods(typeAwareResults, judgeResults) {
     }
   }
 
-  const agreementRate = agreements.length / typeAwareResults.validations.length;
+  const agreementRate = minLength > 0 ? agreements.length / minLength : 0;
 
   return {
     agreementRate,
     agreements: agreements.length,
     disagreements: disagreements.length,
-    total: typeAwareResults.validations.length,
+    total: minLength,
     typeAwareAccuracy: typeAwareResults.accuracy,
     judgeAccuracy: judgeResults.accuracy,
     judgeAccuracyWithPartial: judgeResults.accuracyWithPartial,

@@ -252,9 +252,9 @@ async function main() {
   const args = process.argv.slice(2);
 
   // Parse arguments
-  let providerName = 'openai';
+  let providerName = null;
   let datasetFilter = null;
-  let maxQuestions = 20;
+  let maxQuestions = null;
   let judgeMode = 'type-aware';
 
   // Parse flags and positional arguments
@@ -297,14 +297,18 @@ Environment Variables:
   ANTHROPIC_API_KEY   Anthropic API key
 `);
       process.exit(0);
-    } else if (!providerName || providerName === 'openai') {
+    } else if (providerName === null) {
       providerName = arg;
-    } else if (!datasetFilter) {
+    } else if (datasetFilter === null) {
       datasetFilter = arg;
-    } else if (!maxQuestions || maxQuestions === 20) {
+    } else if (maxQuestions === null) {
       maxQuestions = parseInt(arg) || 20;
     }
   }
+
+  // Set defaults
+  providerName = providerName || 'openai';
+  maxQuestions = maxQuestions || 20;
 
   console.log('CTF LLM Comprehension Test');
   console.log('='.repeat(70));

@@ -221,7 +221,7 @@ export function validateBatch(results, options = {}) {
   const correct = validations.filter(v => v.correct).length;
   const total = validations.length;
   const accuracy = total > 0 ? correct / total : 0;
-  const avgConfidence = validations.reduce((sum, v) => sum + v.confidence, 0) / total;
+  const avgConfidence = total > 0 ? validations.reduce((sum, v) => sum + v.confidence, 0) / total : 0;
 
   return {
     accuracy,
