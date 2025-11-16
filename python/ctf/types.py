@@ -1,7 +1,6 @@
 """Type definitions for CTF."""
 
-from typing import Union, Dict, List, Any, Literal, TypedDict
-
+from typing import Any, Dict, List, Literal, TypedDict, Union
 
 # JSON value types
 JsonValue = Union[None, bool, int, float, str, List[Any], Dict[str, Any]]

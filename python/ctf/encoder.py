@@ -1,10 +1,11 @@
 """CTF Encoder - Convert JSON to CTF."""
 
 from typing import Any, Optional
-from ctf.types import JsonValue, EncodeOptions
-from ctf.utils import format_value, is_array, is_object, is_primitive
-from ctf.references import ReferenceManager
+
 from ctf.optimizer import Optimizer
+from ctf.references import ReferenceManager
+from ctf.types import EncodeOptions, JsonValue
+from ctf.utils import format_value, is_array, is_object, is_primitive
 
 
 def encode(value: JsonValue, options: Optional[EncodeOptions] = None) -> str:
@@ -65,7 +66,7 @@ class CTFEncoder:
                 self.delimiter = self.delimiter_option
 
             # Set up references if beneficial
-            use_refs = self.references_option == True or (
+            use_refs = self.references_option or (
                 self.references_option == "auto" and recommendations["use_references"]
             )
 
@@ -85,7 +86,7 @@ class CTFEncoder:
             if self.delimiter_option != "auto":
                 self.delimiter = self.delimiter_option
 
-            if self.references_option == True:
+            if self.references_option:
                 self.ref_manager = ReferenceManager()
                 self.ref_manager.analyze(value)
                 self.ref_manager.build_references()

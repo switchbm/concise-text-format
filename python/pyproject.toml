@@ -67,11 +67,20 @@ target-version = ['py38']
 [tool.ruff]
 line-length = 100
 target-version = "py38"
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "I", "N", "UP", "YTT", "S", "B", "A", "C4", "T10", "ICN", "PIE", "PYI", "PT", "RET", "SIM", "ARG", "PL", "RUF"]
-ignore = ["S101"]  # Allow assert in tests
+ignore = [
+    "S101",      # Allow assert in tests
+    "PLR0911",   # Too many return statements (parse_value needs multiple returns)
+    "PLR0912",   # Too many branches (encode needs multiple branches for different types)
+    "PLR2004",   # Magic value comparisons (threshold constants are self-documenting)
+    "PLC0415",   # Import not at top-level (lazy import to avoid circular dependency)
+    "ARG002",    # Unused method argument (kept for API consistency)
+]
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true

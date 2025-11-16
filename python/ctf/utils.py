@@ -15,9 +15,7 @@ def needs_quoting(s: str) -> bool:
         True if string needs quoting
     """
     # Quote if contains special characters, spaces, or starts with digits
-    if re.search(r'[:|\t\n\r"\[\]{},^@ ]', s) or re.match(r"^\d", s):
-        return True
-    return False
+    return bool(re.search(r'[:|\t\n\r"\[\]{},^@ ]', s) or re.match(r"^\d", s))
 
 
 def escape_string(s: str) -> str:

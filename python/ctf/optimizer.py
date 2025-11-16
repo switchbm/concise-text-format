@@ -1,6 +1,7 @@
 """Auto-optimization for CTF."""
 
-from typing import Any, Literal, Dict
+from typing import Any, Dict, Literal, cast
+
 from ctf.types import JsonValue
 
 
@@ -101,7 +102,8 @@ class Optimizer:
         count_in_strings(data)
 
         # Choose delimiter that appears least in data
-        return min(delimiter_counts.items(), key=lambda x: x[1])[0]
+        result = min(delimiter_counts.items(), key=lambda x: x[1])[0]
+        return cast(Literal[",", "|", "\t"], result)
 
     def should_use_references(self) -> bool:
         """

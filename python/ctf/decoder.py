@@ -2,9 +2,10 @@
 
 import re
 from typing import Any, Optional
-from ctf.types import JsonValue, DecodeOptions, CTFParseError
-from ctf.utils import parse_value, parse_inline_array, get_indent_level, unescape_string
+
 from ctf.references import ReferenceManager
+from ctf.types import CTFParseError, DecodeOptions, JsonValue
+from ctf.utils import get_indent_level, parse_inline_array, parse_value, unescape_string
 
 
 def decode(input_str: str, options: Optional[DecodeOptions] = None) -> JsonValue:
@@ -86,7 +87,8 @@ class CTFDecoder:
 
         # If result is a single-key object with "data" key, unwrap the array
         if isinstance(result, dict) and len(result) == 1 and "data" in result:
-            return result["data"]
+            unwrapped: JsonValue = result["data"]
+            return unwrapped
 
         return result
 
@@ -146,7 +148,9 @@ class CTFDecoder:
                     # Remove trailing colon if present
                     fields_str = fields_str.rstrip(":")
                     fields = fields_str.split(",")  # Fields are ALWAYS comma-separated
-                    result[key] = self._parse_tabular_array(context, count, fields, delimiter, indent)
+                    result[key] = self._parse_tabular_array(
+                        context, count, fields, delimiter, indent
+                    )
                 else:
                     # List array
                     result[key] = self._parse_list_array(context, count, indent)

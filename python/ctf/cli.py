@@ -1,18 +1,18 @@
 """Command-line interface for CTF."""
 
-import sys
-import json
 import argparse
+import json
+import sys
 from pathlib import Path
-from typing import Optional
-from ctf import encode, decode, __version__
+
+from ctf import __version__, decode, encode
 from ctf.types import EncodeOptions
 
 
 def main() -> None:
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(
-        description="CTF (Compressed Text Format) - Ultra-efficient data serialization for LLM prompts",
+        description="CTF (Compressed Text Format) - Data serialization for LLM prompts",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("--version", action="version", version=f"ctf-format {__version__}")
@@ -83,10 +83,7 @@ def main() -> None:
 def handle_encode(args: argparse.Namespace) -> None:
     """Handle encode command."""
     # Read input
-    if args.input == "-":
-        input_data = sys.stdin.read()
-    else:
-        input_data = Path(args.input).read_text()
+    input_data = sys.stdin.read() if args.input == "-" else Path(args.input).read_text()
 
     # Parse JSON
     data = json.loads(input_data)
@@ -109,7 +106,7 @@ def handle_encode(args: argparse.Namespace) -> None:
         ctf_size = len(ctf_output)
         savings = ((json_size - ctf_size) / json_size * 100) if json_size > 0 else 0
 
-        print(f"\nStatistics:", file=sys.stderr)
+        print("\nStatistics:", file=sys.stderr)
         print(f"  JSON size: {json_size} bytes", file=sys.stderr)
         print(f"  CTF size:  {ctf_size} bytes", file=sys.stderr)
         print(f"  Savings:   {savings:.1f}%", file=sys.stderr)
@@ -126,19 +123,13 @@ def handle_encode(args: argparse.Namespace) -> None:
 def handle_decode(args: argparse.Namespace) -> None:
     """Handle decode command."""
     # Read input
-    if args.input == "-":
-        input_data = sys.stdin.read()
-    else:
-        input_data = Path(args.input).read_text()
+    input_data = sys.stdin.read() if args.input == "-" else Path(args.input).read_text()
 
     # Decode
     data = decode(input_data)
 
     # Convert to JSON
-    if args.pretty:
-        json_output = json.dumps(data, indent=2)
-    else:
-        json_output = json.dumps(data)
+    json_output = json.dumps(data, indent=2) if args.pretty else json.dumps(data)
 
     # Write output
     if args.output:
