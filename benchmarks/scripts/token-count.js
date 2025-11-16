@@ -5,9 +5,13 @@
  * Compares token counts across JSON, YAML, and CTF formats
  */
 
-const fs = require('fs');
-const path = require('path');
-const { encode } = require('../../packages/ctf-core/dist/index.js');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { encode } from '../../packages/ctf-core/dist/index.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Rough token estimator (approximation)
