@@ -148,7 +148,7 @@ export class ReferenceManager {
   } {
     let totalSavings = 0;
 
-    for (const [value, _id] of this.references) {
+    for (const [value] of this.references) {
       const count = this.valueCounts.get(value) || 0;
       totalSavings += this.calculateSavings(value, count);
     }

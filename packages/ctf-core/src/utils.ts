@@ -35,7 +35,7 @@ export function isPrimitive(value: unknown): value is string | number | boolean 
  */
 export function needsQuoting(str: string): boolean {
   // Quote if contains special characters, spaces, or starts with digits
-  return /[:|\t\n\r"\[\]{},^@ ]/.test(str) || /^\d/.test(str);
+  return /[:|\t\n\r"[\]{},^@ ]/.test(str) || /^\d/.test(str);
 }
 
 /**
