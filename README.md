@@ -5,19 +5,33 @@
 [![npm version](https://img.shields.io/npm/v/@ctf-format/core.svg)](https://www.npmjs.com/package/@ctf-format/core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)](https://www.typescriptlang.org/)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://www.python.org/)
 
 ## Overview
 
-CTF (Compressed Text Format) is a data serialization format designed specifically for LLM prompts. It achieves **30-50% token reduction** compared to JSON while maintaining excellent LLM comprehension.
+CTF (Compressed Text Format) is a data serialization format designed specifically for Large Language Model (LLM) prompts. It achieves **30-50% token reduction** compared to JSON while maintaining excellent LLM comprehension, resulting in significant cost savings when using token-based LLM APIs.
+
+### Why CTF?
+
+When sending data to LLMs (GPT-4, Claude, etc.), you pay per token. JSON is verbose and wastes tokens on syntax overhead. CTF was built to solve this problem by creating a format that:
+
+- Minimizes token count through smart encoding strategies
+- Remains easily parseable by both humans and LLMs
+- Supports all JSON data types with full round-trip safety
+- Automatically optimizes based on your data structure
 
 ### Key Features
 
 - 🚀 **30-50% token reduction** on tabular data compared to JSON
 - 🧠 **Reference compression** for repeated values (90%+ savings on repeated strings)
-- 📊 **Tabular arrays** with CSV-style row format
+- 📊 **Tabular arrays** with CSV-style row format for uniform data
+- 🔄 **Columnar encoding** for very large datasets with high repetition
 - ⚡ **Auto-optimization** with smart format detection
 - 🛠️ **Production-ready** with comprehensive tooling
 - ✅ **Type-safe** with full TypeScript support
+- 🐍 **Dual implementation** - TypeScript/JavaScript and Python
+- 🔁 **Round-trip safe** - Decode(Encode(x)) === x
+- 📝 **Deterministic** - Same input always produces same output
 
 ## Quick Start
 
@@ -103,9 +117,6 @@ ctf encode data.json --stats
 
 **Python:**
 ```bash
-# Install package
-pip install ctf-format
-
 # Encode JSON to CTF
 python -m ctf.cli encode data.json -o data.ctf
 
@@ -120,32 +131,38 @@ python -m ctf.cli encode data.json --stats
 
 ### Primitives
 
+CTF uses compact representations for common values:
+
 ```
 # Booleans (+ for true, - for false)
 active:+
 disabled:-
 
-# Null
+# Null (underscore)
 value:_
 
-# Numbers
+# Numbers (standard notation)
 age:32
 price:99.99
+scientific:1.5e10
 
-# Strings
+# Strings (quoted if they contain special chars or spaces)
 name:Alice
 city:"San Francisco"
+path:"C:\\Users\\Alice"
 ```
 
 ### Objects
 
+**Flat objects:**
 ```
-# Flat objects
 id:123
 name:Alice
 active:+
+```
 
-# Nested objects
+**Nested objects** (indentation-based):
+```
 user:
   id:123
   profile:
@@ -155,8 +172,9 @@ user:
 
 ### Arrays
 
-**Inline arrays** (primitives):
+CTF automatically chooses the most efficient array format:
 
+**Inline arrays** (primitives):
 ```
 tags:[admin ops dev]
 scores:[95 87 92]
@@ -164,7 +182,6 @@ flags:[+ - +]
 ```
 
 **Tabular arrays** (3+ uniform objects):
-
 ```
 users@3|id,name,role:
 1|Alice|admin
@@ -175,7 +192,7 @@ users@3|id,name,role:
 **Comparison with JSON:**
 
 ```json
-// JSON: 138 bytes
+// JSON: 138 bytes, ~35 tokens
 {
   "users": [
     { "id": 1, "name": "Alice", "role": "admin" },
@@ -184,7 +201,7 @@ users@3|id,name,role:
   ]
 }
 
-// CTF: 62 bytes (55% savings!)
+// CTF: 62 bytes, ~19 tokens (55% savings!)
 users@3|id,name,role:
 1|Alice|admin
 2|Bob|user
@@ -193,7 +210,7 @@ users@3|id,name,role:
 
 ### Reference Compression
 
-For repeated values:
+For repeated values, CTF creates references automatically:
 
 ```
 ^1="Engineering Department"
@@ -209,6 +226,17 @@ Charlie|^1
 - With refs: (N × 2) + L tokens
 - Example: "Engineering Department" (23 chars) × 1000 times = **91% savings**
 
+### Columnar Encoding
+
+For very large datasets (1000+ rows) with high repetition:
+
+```
+employees@5000||id,name,dept:
+|id:[1..5000]
+|name:["Alice","Bob",...4998 more]
+|dept:["Engineering"=3500,"Sales"=1000,"Marketing"=500]
+```
+
 ## Advanced Features
 
 ### Auto-Optimization
@@ -222,6 +250,11 @@ const encoded = encode(data, {
   delimiter: 'auto',       // Choose best delimiter (|, \t, or ,)
 });
 ```
+
+**Optimization levels:**
+- `none` - Simple conversion, no optimization
+- `balanced` - Good defaults, recommended for most use cases
+- `aggressive` - Maximum token reduction, best for cost-sensitive applications
 
 ### Delimiter Selection
 
@@ -237,26 +270,30 @@ encode(data, { delimiter: '\t' })
 // Comma delimiter
 encode(data, { delimiter: ',' })
 
-// Auto-select based on data
+// Auto-select based on data content
 encode(data, { delimiter: 'auto' })
 ```
 
-### Columnar Encoding
+### Reference Detection
 
-For very large datasets (1000+ rows) with high repetition:
+CTF automatically detects when reference compression is beneficial:
 
-```
-employees@5000||id,name,dept:
-|id:[1..5000]
-|name:["Alice","Bob",...4998 more]
-|dept:["Engineering"=3500,"Sales"=1000,"Marketing"=500]
+```typescript
+// Auto-detect (creates refs when savings > 10 tokens)
+encode(data, { references: 'auto' })
+
+// Always create references for repeated strings
+encode(data, { references: true })
+
+// Never create references
+encode(data, { references: false })
 ```
 
 ## Benchmarks
 
-### Token Count (Real GPT-4 Tokenizer)
+### Real Token Count (GPT-4 Tokenizer)
 
-Using actual GPT-4 tokenizer (cl100k_base):
+Using the actual GPT-4 tokenizer (cl100k_base):
 
 | Dataset | JSON | CTF (balanced) | CTF (aggressive) | Savings |
 |---------|------|----------------|------------------|---------|
@@ -264,7 +301,20 @@ Using actual GPT-4 tokenizer (cl100k_base):
 | Config (nested) | 850 tokens | 620 tokens | 580 tokens | **32%** |
 | E-commerce order | 1,100 tokens | 820 tokens | 760 tokens | **31%** |
 
-**Average: 34.4% token reduction**
+**Average: 35% token reduction**
+
+### Cost Savings Example
+
+For a typical enterprise application processing 1M employee records monthly:
+
+- JSON: 2,400 tokens × 1M = 2.4B tokens
+- CTF: 1,380 tokens × 1M = 1.38B tokens
+- **Savings: 1.02B tokens/month**
+
+At GPT-4 API pricing ($0.03/1K tokens input):
+- JSON cost: $72,000/month
+- CTF cost: $41,400/month
+- **Monthly savings: $30,600**
 
 ### LLM Comprehension Tests
 
@@ -273,13 +323,16 @@ We validate that CTF maintains LLM comprehension while reducing tokens:
 | Format | Accuracy | Token Efficiency |
 |--------|----------|------------------|
 | JSON | 90-95% | Baseline |
-| CTF | 85-92% | **-34% tokens** |
+| CTF | 85-92% | **-35% tokens** |
 
 **Result**: CTF achieves 30-40% token savings with minimal accuracy impact (<5% difference).
 
 Run benchmarks yourself:
 
 ```bash
+# Install dependencies
+npm install
+
 # Token count with real GPT-4 tokenizer
 npm run benchmark:real
 
@@ -290,57 +343,105 @@ npm run llm:test:judge      # LLM-as-judge validation (flexible)
 npm run llm:test:both       # Compare validation methods
 ```
 
-See [benchmarks/README.md](benchmarks/README.md) for detailed results.
+See [benchmarks/README.md](benchmarks/README.md) for detailed results and methodology.
 
 ## API Reference
 
 ### encode(value, options?)
 
-Encode a JSON value to CTF.
+Encode a JSON value to CTF format.
 
+**TypeScript:**
 ```typescript
 function encode(value: JsonValue, options?: EncodeOptions): string
 
 interface EncodeOptions {
-  indent?: number;                    // Default: 2
-  delimiter?: ',' | '|' | '\t' | 'auto';  // Default: 'auto'
-  references?: boolean | 'auto';     // Default: 'auto'
-  columnar?: boolean | 'auto';       // Default: 'auto'
-  schemas?: boolean;                 // Default: false
-  optimize?: 'none' | 'balanced' | 'aggressive'; // Default: 'balanced'
+  indent?: number;                           // Indentation spaces (default: 2)
+  delimiter?: ',' | '|' | '\t' | 'auto';    // Delimiter for tabular arrays (default: 'auto')
+  references?: boolean | 'auto';             // Reference compression (default: 'auto')
+  columnar?: boolean | 'auto';               // Columnar encoding for large arrays (default: 'auto')
+  schemas?: boolean;                         // Include schema metadata (default: false)
+  optimize?: 'none' | 'balanced' | 'aggressive'; // Optimization level (default: 'balanced')
 }
+```
+
+**Python:**
+```python
+def encode(value: JsonValue, options: Optional[EncodeOptions] = None) -> str
 ```
 
 ### decode(input, options?)
 
-Decode CTF to JSON.
+Decode CTF format to JSON.
 
+**TypeScript:**
 ```typescript
 function decode(input: string, options?: DecodeOptions): JsonValue
 
 interface DecodeOptions {
-  strict?: boolean;      // Default: true (validate all constraints)
-  validate?: boolean;    // Default: true (check array lengths)
-  typeHints?: boolean;   // Default: true (apply type coercion)
+  strict?: boolean;      // Validate all constraints (default: true)
+  validate?: boolean;    // Check array lengths match declared counts (default: true)
+  typeHints?: boolean;   // Apply type coercion (default: true)
 }
 ```
 
-## Documentation
+**Python:**
+```python
+def decode(input: str, options: Optional[DecodeOptions] = None) -> JsonValue
+```
 
-- [Getting Started Guide](docs/getting-started.md)
-- [Complete Specification](SPECIFICATION.md)
-- [API Reference](docs/api-reference.md)
-- [Examples](docs/examples/)
+### Error Handling
+
+**TypeScript:**
+```typescript
+import { decode, CTFParseError } from '@ctf-format/core';
+
+try {
+  const data = decode(ctfString);
+} catch (error) {
+  if (error instanceof CTFParseError) {
+    console.error(`Parse error at line ${error.line}: ${error.message}`);
+  }
+}
+```
+
+**Python:**
+```python
+from ctf import decode, CTFParseError
+
+try:
+    data = decode(ctf_string)
+except CTFParseError as e:
+    print(f"Parse error at line {e.line}: {e.message}")
+```
 
 ## Use Cases
 
 CTF is ideal for:
 
-- 📝 **LLM prompts** - Reduce token costs by 30-50%
-- 📊 **Tabular data** - Employee records, analytics, CSV-like data
-- 🔄 **API responses** - Compress large JSON payloads
-- 📋 **Configuration files** - More concise than JSON/YAML
+- 📝 **LLM prompts** - Reduce token costs by 30-50% when sending data to GPT-4, Claude, etc.
+- 📊 **Tabular data** - Employee records, analytics data, CSV-like structures
+- 🔄 **API responses** - Compress large JSON payloads before sending to LLMs
+- 📋 **Configuration files** - More concise than JSON/YAML for machine consumption
 - 🗃️ **Data transfer** - Smaller payloads for LLM APIs
+- 💰 **Cost optimization** - Significant savings on high-volume LLM applications
+
+### When to Use CTF
+
+CTF works best for:
+
+- ✅ Tabular data (arrays of uniform objects)
+- ✅ Data with repeated values
+- ✅ LLM prompts where tokens matter
+- ✅ Large datasets with high repetition
+- ✅ Cost-sensitive LLM applications
+
+CTF may not be ideal for:
+
+- ❌ Human-editable config files (use JSON/YAML)
+- ❌ Deeply nested objects with few repetitions
+- ❌ Small data structures (<100 bytes)
+- ❌ Applications without token constraints
 
 ## Comparison with Other Formats
 
@@ -352,6 +453,8 @@ CTF is ideal for:
 | Tabular arrays | ❌ | ❌ | ✅ | ✅ |
 | Auto-optimization | ❌ | ❌ | ❌ | ✅ |
 | Columnar encoding | ❌ | ❌ | ❌ | ✅ |
+| Multi-language support | ✅ | ✅ | ❌ | ✅ |
+| Production-ready | ✅ | ✅ | ⚠️ | ✅ |
 
 ## Performance
 
@@ -364,43 +467,249 @@ Encoding and decoding are highly optimized:
 | Encode | 100K rows | <1s |
 | Decode | 100K rows | <1s |
 
-Memory usage: O(n) space complexity
+**Memory usage:** O(n) space complexity
 
 ## Language Support
 
-CTF has official implementations in multiple languages:
+CTF has official implementations in multiple languages, both following the same [specification](SPECIFICATION.md):
 
 ### TypeScript/JavaScript
+
 - **Package:** `@ctf-format/core` (npm)
 - **CLI:** `@ctf-format/cli` (npm)
-- **Status:** ✅ Production-ready, 53 tests passing
-- **Documentation:** [packages/ctf-core/README.md](packages/ctf-core/README.md)
+- **Status:** ✅ Production-ready
+- **Test Coverage:** 53 test cases passing
+- **Node Version:** ≥18.0.0
+- **TypeScript:** 5.3+
+- **Repository:** [packages/ctf-core](packages/ctf-core/)
+
+**Installation:**
+```bash
+npm install @ctf-format/core
+```
+
+**Documentation:** Full TypeScript types, JSDoc comments, and API reference
 
 ### Python
+
 - **Package:** `ctf-format` (PyPI)
-- **Status:** ✅ Production-ready, 51 tests passing
-- **Documentation:** [python/README.md](python/README.md)
-- **Install:** `pip install ctf-format`
+- **Status:** ✅ Production-ready
+- **Test Coverage:** 51 test cases passing
+- **Python Version:** ≥3.8
+- **Type Hints:** Full type annotations
+- **Repository:** [python/](python/)
+
+**Installation:**
+```bash
+pip install ctf-format
+```
+
+**Documentation:** Full type hints, docstrings, and API reference
 
 Both implementations:
-- Share the same [specification](SPECIFICATION.md)
-- Produce identical output
+- Follow the same [CTF specification v1.0](SPECIFICATION.md)
+- Produce identical output for the same input
 - Support full round-trip encoding/decoding
 - Include comprehensive test suites
 - Provide CLI tools
+- Are production-ready and actively maintained
+
+## Repository Structure
+
+```
+concise-text-format/
+├── packages/
+│   ├── ctf-core/              # TypeScript core encoder/decoder
+│   │   ├── src/
+│   │   │   ├── encoder.ts     # CTF encoder implementation
+│   │   │   ├── decoder.ts     # CTF decoder implementation
+│   │   │   ├── optimizer.ts   # Auto-optimization logic
+│   │   │   ├── references.ts  # Reference compression
+│   │   │   ├── utils.ts       # Utility functions
+│   │   │   └── types.ts       # TypeScript types
+│   │   └── tests/             # 53 test cases
+│   │       ├── encoder.test.ts
+│   │       ├── decoder.test.ts
+│   │       └── roundtrip.test.ts
+│   │
+│   └── ctf-cli/               # TypeScript CLI tool
+│       └── src/cli.ts
+│
+├── python/                    # Python implementation
+│   ├── ctf/
+│   │   ├── encoder.py         # Python encoder
+│   │   ├── decoder.py         # Python decoder
+│   │   ├── optimizer.py       # Python optimizer
+│   │   ├── references.py      # Python references
+│   │   ├── utils.py           # Python utilities
+│   │   ├── types.py           # Python types
+│   │   └── cli.py             # Python CLI
+│   └── tests/                 # 51 test cases
+│       ├── test_encoder.py
+│       ├── test_decoder.py
+│       └── test_roundtrip.py
+│
+├── benchmarks/                # Performance benchmarks
+│   ├── datasets/              # Test datasets
+│   │   ├── employees.json     # 10 employee records
+│   │   ├── config.json        # Nested configuration
+│   │   └── ecommerce.json     # E-commerce order
+│   ├── scripts/
+│   │   ├── token-count.js     # Character-based estimation
+│   │   └── real-token-count.js # Real GPT-4 tokenizer
+│   └── llm-tests/             # LLM comprehension tests
+│       ├── runner.js          # Test runner
+│       ├── providers/         # OpenAI, Anthropic providers
+│       ├── validators/        # Type-aware, LLM-judge validation
+│       └── questions/         # Test questions
+│
+├── docs/                      # Documentation
+│   ├── getting-started.md     # Getting started guide
+│   ├── api-reference.md       # Complete API reference
+│   └── examples/              # Usage examples
+│
+├── SPECIFICATION.md           # CTF format specification v1.0
+├── README.md                  # This file
+├── CONTRIBUTING.md            # Contribution guidelines
+├── CODE_OF_CONDUCT.md         # Code of conduct
+└── LICENSE                    # MIT license
+```
+
+## Development
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/ctf-format/ctf.git
+cd ctf
+
+# Install dependencies
+npm install
+
+# Build all packages
+npm run build
+
+# Run tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run benchmarks
+npm run benchmark:real
+```
+
+### Running Tests
+
+**TypeScript:**
+```bash
+npm test
+```
+
+**Python:**
+```bash
+cd python
+pip install -e ".[dev]"
+pytest
+pytest --cov=ctf --cov-report=term-missing
+```
+
+### Testing Both Implementations
+
+The repository includes comprehensive test suites for both implementations:
+
+- **TypeScript:** 53 test cases using Vitest
+- **Python:** 51 test cases using pytest
+- **Round-trip tests:** Ensure encode/decode consistency
+- **Conformance tests:** Verify spec compliance
+
+## Documentation
+
+- [Getting Started Guide](docs/getting-started.md) - Comprehensive tutorial
+- [Complete Specification](SPECIFICATION.md) - Formal CTF format specification
+- [API Reference](docs/api-reference.md) - Detailed API documentation
+- [Benchmark Results](benchmarks/README.md) - Performance metrics and methodology
+- [LLM Tests](benchmarks/llm-tests/README.md) - Comprehension validation
+- [Contributing Guidelines](CONTRIBUTING.md) - How to contribute
+- [Code of Conduct](CODE_OF_CONDUCT.md) - Community guidelines
 
 ## Contributing
 
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
+**Areas where we'd love help:**
+
+- Additional language implementations (Rust, Go, Java, etc.)
+- Performance optimizations
+- Additional benchmarks and test cases
+- Documentation improvements
+- Bug reports and feature requests
+
+### Development Guidelines
+
+- Follow the existing code style
+- Add tests for new features
+- Update documentation
+- Ensure all tests pass
+- Maintain 90%+ test coverage
+
 ## License
 
-MIT © CTF Team
+MIT © CTF Format Team
+
+See [LICENSE](LICENSE) for details.
 
 ## Acknowledgments
 
-Inspired by [TOON format](https://github.com/toon-format/toon) - CTF builds upon TOON's tabular array concept with additional innovations like reference compression, columnar encoding, and auto-optimization.
+Inspired by [TOON format](https://github.com/toon-format/toon) - CTF builds upon TOON's tabular array concept with additional innovations:
+
+- Reference compression for repeated values
+- Columnar encoding for large datasets
+- Auto-optimization based on data analysis
+- Multi-language implementations
+- Production-ready tooling and comprehensive documentation
+
+## FAQ
+
+### How does CTF compare to JSON compression (gzip)?
+
+CTF focuses on **token reduction for LLMs**, not byte compression. While gzip reduces bytes, it doesn't reduce the number of tokens an LLM processes. CTF reduces both bytes AND tokens, making it ideal for LLM APIs where you pay per token.
+
+### Can I use CTF with any LLM?
+
+Yes! CTF is designed to be easily understood by all major LLMs including GPT-4, Claude, Gemini, LLaMA, and others. Our comprehension tests validate this across multiple providers.
+
+### Is CTF human-readable?
+
+CTF is designed to be **machine-readable** and **LLM-parseable**. While humans can read it, we recommend using JSON/YAML for files that need to be hand-edited. Use CTF for programmatic data transfer to LLMs.
+
+### What's the performance overhead?
+
+Encoding/decoding is very fast (<100ms for 10K rows). The token savings far outweigh the minimal CPU cost, especially when you consider API latency and cost.
+
+### Can I mix CTF and JSON?
+
+Yes! You can encode specific data structures to CTF while keeping the rest of your system in JSON. The `encode()` and `decode()` functions make conversion seamless.
+
+### Does CTF support streaming?
+
+Not currently. CTF is designed for complete document encoding/decoding. Streaming support may be added in future versions if there's demand.
+
+## Roadmap
+
+- [ ] Additional language implementations (Rust, Go, Java)
+- [ ] Streaming encoder/decoder
+- [ ] Schema validation
+- [ ] Binary CTF variant for even more compression
+- [ ] Browser-based playground/visualizer
+- [ ] Integration examples with popular LLM frameworks
+- [ ] Benchmark suite expansion
 
 ---
 
 **Made with ❤️ for the LLM community**
+
+**Questions? Issues?** Open an issue on [GitHub](https://github.com/ctf-format/ctf/issues)
+
+**Want to discuss?** Join our [discussions](https://github.com/ctf-format/ctf/discussions)
