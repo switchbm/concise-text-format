@@ -85,6 +85,10 @@ jobs:
         run: |
           git log --format=%s origin/${{ github.base_ref }}..HEAD | \
           while read commit; do
+            # Skip merge commits (start with "Merge")
+            if echo "$commit" | grep -qE '^Merge '; then
+              continue
+            fi
             if ! echo "$commit" | grep -qE '^(feat|fix|docs|style|refactor|perf|test|chore|revert)(\(.+\))?: .+'; then
               echo "Invalid commit message: $commit"
               exit 1
