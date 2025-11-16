@@ -1,5 +1,7 @@
 """Reference compression for CTF."""
 
+from __future__ import annotations
+
 from typing import Any, Dict, Optional
 
 from ctf.utils import escape_string

@@ -1,5 +1,7 @@
 """Type definitions for CTF."""
 
+from __future__ import annotations
+
 from typing import Any, Dict, List, Literal, TypedDict, Union
 
 # JSON value types

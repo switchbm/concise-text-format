@@ -1,5 +1,7 @@
 """CTF Encoder - Convert JSON to CTF."""
 
+from __future__ import annotations
+
 from typing import Any, Optional
 
 from ctf.optimizer import Optimizer

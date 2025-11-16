@@ -1,5 +1,7 @@
 """Auto-optimization for CTF."""
 
+from __future__ import annotations
+
 from typing import Any, Dict, Literal, cast
 
 from ctf.types import JsonValue

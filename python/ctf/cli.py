@@ -1,5 +1,7 @@
 """Command-line interface for CTF."""
 
+from __future__ import annotations
+
 import argparse
 import json
 import sys
