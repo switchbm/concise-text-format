@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, Optional
+from typing import Any
 
 from ctf.utils import escape_string
 
@@ -20,9 +20,9 @@ class ReferenceManager:
         """
         self.min_length = min_length
         self.min_occurrences = min_occurrences
-        self.value_counts: Dict[str, int] = {}
-        self.references: Dict[str, str] = {}  # value -> ^N
-        self.reverse_references: Dict[str, str] = {}  # ^N -> value
+        self.value_counts: dict[str, int] = {}
+        self.references: dict[str, str] = {}  # value -> ^N
+        self.reverse_references: dict[str, str] = {}  # ^N -> value
         self.next_ref_id = 1
 
     def analyze(self, value: Any) -> None:
@@ -58,7 +58,7 @@ class ReferenceManager:
             self.reverse_references[ref] = value
             self.next_ref_id += 1
 
-    def get_reference(self, value: str) -> Optional[str]:
+    def get_reference(self, value: str) -> str | None:
         """
         Get reference for a value if it exists.
 
@@ -83,7 +83,7 @@ class ReferenceManager:
             definitions.append(f"{ref}={escaped}")
         return definitions
 
-    def resolve_reference(self, ref: str) -> Optional[str]:
+    def resolve_reference(self, ref: str) -> str | None:
         """
         Resolve a reference to its value.
 

@@ -15,8 +15,8 @@ class EncodeOptions(TypedDict, total=False):
 
     indent: int  # Number of spaces for indentation (default: 2)
     delimiter: Literal[",", "|", "\t", "auto"]  # Delimiter for tabular arrays (default: "auto")
-    references: Union[bool, Literal["auto"]]  # Enable reference compression (default: "auto")
-    columnar: Union[bool, Literal["auto"]]  # Enable columnar encoding (default: "auto")
+    references: bool | Literal["auto"]  # Enable reference compression (default: "auto")
+    columnar: bool | Literal["auto"]  # Enable columnar encoding (default: "auto")
     schemas: bool  # Include schema definitions (default: False)
     optimize: Literal["none", "balanced", "aggressive"]  # Optimization level (default: "balanced")
 

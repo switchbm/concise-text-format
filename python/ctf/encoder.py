@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 from ctf.optimizer import Optimizer
 from ctf.references import ReferenceManager
@@ -10,7 +10,7 @@ from ctf.types import EncodeOptions, JsonValue
 from ctf.utils import format_value, is_array, is_object, is_primitive
 
 
-def encode(value: JsonValue, options: Optional[EncodeOptions] = None) -> str:
+def encode(value: JsonValue, options: EncodeOptions | None = None) -> str:
     """
     Encode JSON value to CTF.
 
@@ -43,7 +43,7 @@ class CTFEncoder:
         self.optimize_level = options.get("optimize", "balanced")
 
         self.delimiter = "|"  # Will be set during optimization
-        self.ref_manager: Optional[ReferenceManager] = None
+        self.ref_manager: ReferenceManager | None = None
 
     def encode(self, value: JsonValue) -> str:
         """

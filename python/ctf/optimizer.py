@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, Literal, cast
+from typing import Any, Literal, cast
 
 from ctf.types import JsonValue
 
@@ -130,7 +130,7 @@ class Optimizer:
         # Use columnar for very large arrays (1000+ rows)
         return array_length >= 1000
 
-    def get_recommendations(self) -> Dict[str, Any]:
+    def get_recommendations(self) -> dict[str, Any]:
         """
         Get optimization recommendations.
 

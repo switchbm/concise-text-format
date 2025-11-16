@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Optional
+from typing import Any
 
 from ctf.references import ReferenceManager
 from ctf.types import CTFParseError, DecodeOptions, JsonValue
 from ctf.utils import get_indent_level, parse_inline_array, parse_value, unescape_string
 
 
-def decode(input_str: str, options: Optional[DecodeOptions] = None) -> JsonValue:
+def decode(input_str: str, options: DecodeOptions | None = None) -> JsonValue:
     """
     Decode CTF to JSON value.
 
@@ -106,7 +106,7 @@ class CTFDecoder:
             Parsed value
         """
         result: dict[str, Any] = {}
-        expected_indent: Optional[int] = None
+        expected_indent: int | None = None
 
         while context.current_line < len(context.lines):
             line = context.lines[context.current_line]
