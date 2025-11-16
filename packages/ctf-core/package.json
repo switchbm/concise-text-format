@@ -1,0 +1,45 @@
+{
+  "name": "@ctf-format/core",
+  "version": "1.0.0",
+  "description": "Core encoder/decoder for Compressed Text Format (CTF)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "ctf",
+    "serialization",
+    "llm",
+    "compression",
+    "data-format"
+  ],
+  "author": "CTF Format Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ctf-format/ctf.git",
+    "directory": "packages/ctf-core"
+  }
+}

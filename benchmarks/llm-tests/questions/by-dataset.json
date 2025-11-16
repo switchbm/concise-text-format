@@ -1,0 +1,1272 @@
+{
+  "config": [
+    {
+      "id": "config_application_type",
+      "dataset": "config",
+      "question": "What type is \"application\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "application"
+    },
+    {
+      "id": "config_application.name_value",
+      "dataset": "config",
+      "question": "What is the value of \"application.name\"?",
+      "answer": "MyApp",
+      "type": "string",
+      "path": "application.name"
+    },
+    {
+      "id": "config_application.name_type",
+      "dataset": "config",
+      "question": "What type is \"application.name\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "application.name"
+    },
+    {
+      "id": "config_application.version_value",
+      "dataset": "config",
+      "question": "What is the value of \"application.version\"?",
+      "answer": "2.5.1",
+      "type": "string",
+      "path": "application.version"
+    },
+    {
+      "id": "config_application.version_type",
+      "dataset": "config",
+      "question": "What type is \"application.version\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "application.version"
+    },
+    {
+      "id": "config_application.environment_value",
+      "dataset": "config",
+      "question": "What is the value of \"application.environment\"?",
+      "answer": "production",
+      "type": "string",
+      "path": "application.environment"
+    },
+    {
+      "id": "config_application.environment_type",
+      "dataset": "config",
+      "question": "What type is \"application.environment\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "application.environment"
+    },
+    {
+      "id": "config_application.debug_value",
+      "dataset": "config",
+      "question": "What is the value of \"application.debug\"?",
+      "answer": false,
+      "type": "boolean",
+      "path": "application.debug"
+    },
+    {
+      "id": "config_application.debug_type",
+      "dataset": "config",
+      "question": "What type is \"application.debug\"?",
+      "answer": "boolean",
+      "type": "string",
+      "path": "application.debug"
+    },
+    {
+      "id": "config_database_type",
+      "dataset": "config",
+      "question": "What type is \"database\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "database"
+    },
+    {
+      "id": "config_database.host_value",
+      "dataset": "config",
+      "question": "What is the value of \"database.host\"?",
+      "answer": "db.example.com",
+      "type": "string",
+      "path": "database.host"
+    },
+    {
+      "id": "config_database.host_type",
+      "dataset": "config",
+      "question": "What type is \"database.host\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "database.host"
+    },
+    {
+      "id": "config_database.port_value",
+      "dataset": "config",
+      "question": "What is the value of \"database.port\"?",
+      "answer": 5432,
+      "type": "number",
+      "path": "database.port"
+    },
+    {
+      "id": "config_database.port_type",
+      "dataset": "config",
+      "question": "What type is \"database.port\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "database.port"
+    },
+    {
+      "id": "config_database.name_value",
+      "dataset": "config",
+      "question": "What is the value of \"database.name\"?",
+      "answer": "myapp_prod",
+      "type": "string",
+      "path": "database.name"
+    },
+    {
+      "id": "config_database.name_type",
+      "dataset": "config",
+      "question": "What type is \"database.name\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "database.name"
+    },
+    {
+      "id": "config_database.ssl_value",
+      "dataset": "config",
+      "question": "What is the value of \"database.ssl\"?",
+      "answer": true,
+      "type": "boolean",
+      "path": "database.ssl"
+    },
+    {
+      "id": "config_database.ssl_type",
+      "dataset": "config",
+      "question": "What type is \"database.ssl\"?",
+      "answer": "boolean",
+      "type": "string",
+      "path": "database.ssl"
+    },
+    {
+      "id": "config_database.pool_type",
+      "dataset": "config",
+      "question": "What type is \"database.pool\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "database.pool"
+    },
+    {
+      "id": "config_database.pool.min_value",
+      "dataset": "config",
+      "question": "What is the value of \"database.pool.min\"?",
+      "answer": 2,
+      "type": "number",
+      "path": "database.pool.min"
+    },
+    {
+      "id": "config_database.pool.min_type",
+      "dataset": "config",
+      "question": "What type is \"database.pool.min\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "database.pool.min"
+    },
+    {
+      "id": "config_database.pool.max_value",
+      "dataset": "config",
+      "question": "What is the value of \"database.pool.max\"?",
+      "answer": 10,
+      "type": "number",
+      "path": "database.pool.max"
+    },
+    {
+      "id": "config_database.pool.max_type",
+      "dataset": "config",
+      "question": "What type is \"database.pool.max\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "database.pool.max"
+    },
+    {
+      "id": "config_database.pool.idle_timeout_value",
+      "dataset": "config",
+      "question": "What is the value of \"database.pool.idle_timeout\"?",
+      "answer": 30000,
+      "type": "number",
+      "path": "database.pool.idle_timeout"
+    },
+    {
+      "id": "config_database.pool.idle_timeout_type",
+      "dataset": "config",
+      "question": "What type is \"database.pool.idle_timeout\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "database.pool.idle_timeout"
+    },
+    {
+      "id": "config_cache_type",
+      "dataset": "config",
+      "question": "What type is \"cache\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "cache"
+    },
+    {
+      "id": "config_cache.enabled_value",
+      "dataset": "config",
+      "question": "What is the value of \"cache.enabled\"?",
+      "answer": true,
+      "type": "boolean",
+      "path": "cache.enabled"
+    },
+    {
+      "id": "config_cache.enabled_type",
+      "dataset": "config",
+      "question": "What type is \"cache.enabled\"?",
+      "answer": "boolean",
+      "type": "string",
+      "path": "cache.enabled"
+    },
+    {
+      "id": "config_cache.type_value",
+      "dataset": "config",
+      "question": "What is the value of \"cache.type\"?",
+      "answer": "redis",
+      "type": "string",
+      "path": "cache.type"
+    },
+    {
+      "id": "config_cache.type_type",
+      "dataset": "config",
+      "question": "What type is \"cache.type\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "cache.type"
+    },
+    {
+      "id": "config_cache.host_value",
+      "dataset": "config",
+      "question": "What is the value of \"cache.host\"?",
+      "answer": "cache.example.com",
+      "type": "string",
+      "path": "cache.host"
+    },
+    {
+      "id": "config_cache.host_type",
+      "dataset": "config",
+      "question": "What type is \"cache.host\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "cache.host"
+    },
+    {
+      "id": "config_cache.port_value",
+      "dataset": "config",
+      "question": "What is the value of \"cache.port\"?",
+      "answer": 6379,
+      "type": "number",
+      "path": "cache.port"
+    },
+    {
+      "id": "config_cache.port_type",
+      "dataset": "config",
+      "question": "What type is \"cache.port\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "cache.port"
+    },
+    {
+      "id": "config_cache.ttl_value",
+      "dataset": "config",
+      "question": "What is the value of \"cache.ttl\"?",
+      "answer": 3600,
+      "type": "number",
+      "path": "cache.ttl"
+    },
+    {
+      "id": "config_cache.ttl_type",
+      "dataset": "config",
+      "question": "What type is \"cache.ttl\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "cache.ttl"
+    },
+    {
+      "id": "config_features_type",
+      "dataset": "config",
+      "question": "What type is \"features\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "features"
+    },
+    {
+      "id": "config_features.authentication_value",
+      "dataset": "config",
+      "question": "What is the value of \"features.authentication\"?",
+      "answer": true,
+      "type": "boolean",
+      "path": "features.authentication"
+    },
+    {
+      "id": "config_features.authentication_type",
+      "dataset": "config",
+      "question": "What type is \"features.authentication\"?",
+      "answer": "boolean",
+      "type": "string",
+      "path": "features.authentication"
+    },
+    {
+      "id": "config_features.notifications_value",
+      "dataset": "config",
+      "question": "What is the value of \"features.notifications\"?",
+      "answer": true,
+      "type": "boolean",
+      "path": "features.notifications"
+    },
+    {
+      "id": "config_features.notifications_type",
+      "dataset": "config",
+      "question": "What type is \"features.notifications\"?",
+      "answer": "boolean",
+      "type": "string",
+      "path": "features.notifications"
+    },
+    {
+      "id": "config_features.analytics_value",
+      "dataset": "config",
+      "question": "What is the value of \"features.analytics\"?",
+      "answer": true,
+      "type": "boolean",
+      "path": "features.analytics"
+    },
+    {
+      "id": "config_features.analytics_type",
+      "dataset": "config",
+      "question": "What type is \"features.analytics\"?",
+      "answer": "boolean",
+      "type": "string",
+      "path": "features.analytics"
+    },
+    {
+      "id": "config_features.beta_features_value",
+      "dataset": "config",
+      "question": "What is the value of \"features.beta_features\"?",
+      "answer": false,
+      "type": "boolean",
+      "path": "features.beta_features"
+    },
+    {
+      "id": "config_features.beta_features_type",
+      "dataset": "config",
+      "question": "What type is \"features.beta_features\"?",
+      "answer": "boolean",
+      "type": "string",
+      "path": "features.beta_features"
+    },
+    {
+      "id": "config_limits_type",
+      "dataset": "config",
+      "question": "What type is \"limits\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "limits"
+    },
+    {
+      "id": "config_limits.max_users_value",
+      "dataset": "config",
+      "question": "What is the value of \"limits.max_users\"?",
+      "answer": 10000,
+      "type": "number",
+      "path": "limits.max_users"
+    },
+    {
+      "id": "config_limits.max_users_type",
+      "dataset": "config",
+      "question": "What type is \"limits.max_users\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "limits.max_users"
+    },
+    {
+      "id": "config_limits.max_requests_per_minute_value",
+      "dataset": "config",
+      "question": "What is the value of \"limits.max_requests_per_minute\"?",
+      "answer": 1000,
+      "type": "number",
+      "path": "limits.max_requests_per_minute"
+    },
+    {
+      "id": "config_limits.max_requests_per_minute_type",
+      "dataset": "config",
+      "question": "What type is \"limits.max_requests_per_minute\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "limits.max_requests_per_minute"
+    },
+    {
+      "id": "config_limits.max_file_size_mb_value",
+      "dataset": "config",
+      "question": "What is the value of \"limits.max_file_size_mb\"?",
+      "answer": 50,
+      "type": "number",
+      "path": "limits.max_file_size_mb"
+    },
+    {
+      "id": "config_limits.max_file_size_mb_type",
+      "dataset": "config",
+      "question": "What type is \"limits.max_file_size_mb\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "limits.max_file_size_mb"
+    },
+    {
+      "id": "config_integrations_type",
+      "dataset": "config",
+      "question": "What type is \"integrations\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "integrations"
+    },
+    {
+      "id": "config_integrations.stripe_type",
+      "dataset": "config",
+      "question": "What type is \"integrations.stripe\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "integrations.stripe"
+    },
+    {
+      "id": "config_integrations.stripe.enabled_value",
+      "dataset": "config",
+      "question": "What is the value of \"integrations.stripe.enabled\"?",
+      "answer": true,
+      "type": "boolean",
+      "path": "integrations.stripe.enabled"
+    },
+    {
+      "id": "config_integrations.stripe.enabled_type",
+      "dataset": "config",
+      "question": "What type is \"integrations.stripe.enabled\"?",
+      "answer": "boolean",
+      "type": "string",
+      "path": "integrations.stripe.enabled"
+    },
+    {
+      "id": "config_integrations.stripe.public_key_value",
+      "dataset": "config",
+      "question": "What is the value of \"integrations.stripe.public_key\"?",
+      "answer": "pk_live_XXXXXXXXXXXX",
+      "type": "string",
+      "path": "integrations.stripe.public_key"
+    },
+    {
+      "id": "config_integrations.stripe.public_key_type",
+      "dataset": "config",
+      "question": "What type is \"integrations.stripe.public_key\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "integrations.stripe.public_key"
+    },
+    {
+      "id": "config_integrations.stripe.webhook_secret_value",
+      "dataset": "config",
+      "question": "What is the value of \"integrations.stripe.webhook_secret\"?",
+      "answer": "whsec_XXXXXXXXXXXX",
+      "type": "string",
+      "path": "integrations.stripe.webhook_secret"
+    },
+    {
+      "id": "config_integrations.stripe.webhook_secret_type",
+      "dataset": "config",
+      "question": "What type is \"integrations.stripe.webhook_secret\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "integrations.stripe.webhook_secret"
+    },
+    {
+      "id": "config_integrations.sendgrid_type",
+      "dataset": "config",
+      "question": "What type is \"integrations.sendgrid\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "integrations.sendgrid"
+    },
+    {
+      "id": "config_integrations.sendgrid.enabled_value",
+      "dataset": "config",
+      "question": "What is the value of \"integrations.sendgrid.enabled\"?",
+      "answer": true,
+      "type": "boolean",
+      "path": "integrations.sendgrid.enabled"
+    },
+    {
+      "id": "config_integrations.sendgrid.enabled_type",
+      "dataset": "config",
+      "question": "What type is \"integrations.sendgrid.enabled\"?",
+      "answer": "boolean",
+      "type": "string",
+      "path": "integrations.sendgrid.enabled"
+    },
+    {
+      "id": "config_integrations.sendgrid.api_key_value",
+      "dataset": "config",
+      "question": "What is the value of \"integrations.sendgrid.api_key\"?",
+      "answer": "SG.XXXXXXXXXXXX",
+      "type": "string",
+      "path": "integrations.sendgrid.api_key"
+    },
+    {
+      "id": "config_integrations.sendgrid.api_key_type",
+      "dataset": "config",
+      "question": "What type is \"integrations.sendgrid.api_key\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "integrations.sendgrid.api_key"
+    },
+    {
+      "id": "config_integrations.sendgrid.from_email_value",
+      "dataset": "config",
+      "question": "What is the value of \"integrations.sendgrid.from_email\"?",
+      "answer": "noreply@example.com",
+      "type": "string",
+      "path": "integrations.sendgrid.from_email"
+    },
+    {
+      "id": "config_integrations.sendgrid.from_email_type",
+      "dataset": "config",
+      "question": "What type is \"integrations.sendgrid.from_email\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "integrations.sendgrid.from_email"
+    },
+    {
+      "id": "config_integrations.slack_type",
+      "dataset": "config",
+      "question": "What type is \"integrations.slack\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "integrations.slack"
+    },
+    {
+      "id": "config_integrations.slack.enabled_value",
+      "dataset": "config",
+      "question": "What is the value of \"integrations.slack.enabled\"?",
+      "answer": false,
+      "type": "boolean",
+      "path": "integrations.slack.enabled"
+    },
+    {
+      "id": "config_integrations.slack.enabled_type",
+      "dataset": "config",
+      "question": "What type is \"integrations.slack.enabled\"?",
+      "answer": "boolean",
+      "type": "string",
+      "path": "integrations.slack.enabled"
+    },
+    {
+      "id": "config_integrations.slack.webhook_url_value",
+      "dataset": "config",
+      "question": "What is the value of \"integrations.slack.webhook_url\"?",
+      "answer": null,
+      "type": "object",
+      "path": "integrations.slack.webhook_url"
+    },
+    {
+      "id": "config_integrations.slack.webhook_url_type",
+      "dataset": "config",
+      "question": "What type is \"integrations.slack.webhook_url\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "integrations.slack.webhook_url"
+    }
+  ],
+  "ecommerce": [
+    {
+      "id": "ecommerce_order_id_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"order_id\"?",
+      "answer": "ORD-2024-00123",
+      "type": "string",
+      "path": "order_id"
+    },
+    {
+      "id": "ecommerce_order_id_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"order_id\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "order_id"
+    },
+    {
+      "id": "ecommerce_customer_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"customer\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "customer"
+    },
+    {
+      "id": "ecommerce_customer.id_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"customer.id\"?",
+      "answer": 5678,
+      "type": "number",
+      "path": "customer.id"
+    },
+    {
+      "id": "ecommerce_customer.id_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"customer.id\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "customer.id"
+    },
+    {
+      "id": "ecommerce_customer.name_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"customer.name\"?",
+      "answer": "Sarah Connor",
+      "type": "string",
+      "path": "customer.name"
+    },
+    {
+      "id": "ecommerce_customer.name_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"customer.name\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "customer.name"
+    },
+    {
+      "id": "ecommerce_customer.email_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"customer.email\"?",
+      "answer": "sarah.connor@email.com",
+      "type": "string",
+      "path": "customer.email"
+    },
+    {
+      "id": "ecommerce_customer.email_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"customer.email\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "customer.email"
+    },
+    {
+      "id": "ecommerce_customer.phone_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"customer.phone\"?",
+      "answer": "+1-555-0123",
+      "type": "string",
+      "path": "customer.phone"
+    },
+    {
+      "id": "ecommerce_customer.phone_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"customer.phone\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "customer.phone"
+    },
+    {
+      "id": "ecommerce_shipping_address_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"shipping_address\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "shipping_address"
+    },
+    {
+      "id": "ecommerce_shipping_address.street_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"shipping_address.street\"?",
+      "answer": "123 Main Street",
+      "type": "string",
+      "path": "shipping_address.street"
+    },
+    {
+      "id": "ecommerce_shipping_address.street_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"shipping_address.street\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "shipping_address.street"
+    },
+    {
+      "id": "ecommerce_shipping_address.city_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"shipping_address.city\"?",
+      "answer": "Los Angeles",
+      "type": "string",
+      "path": "shipping_address.city"
+    },
+    {
+      "id": "ecommerce_shipping_address.city_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"shipping_address.city\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "shipping_address.city"
+    },
+    {
+      "id": "ecommerce_shipping_address.state_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"shipping_address.state\"?",
+      "answer": "CA",
+      "type": "string",
+      "path": "shipping_address.state"
+    },
+    {
+      "id": "ecommerce_shipping_address.state_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"shipping_address.state\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "shipping_address.state"
+    },
+    {
+      "id": "ecommerce_shipping_address.zip_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"shipping_address.zip\"?",
+      "answer": "90001",
+      "type": "string",
+      "path": "shipping_address.zip"
+    },
+    {
+      "id": "ecommerce_shipping_address.zip_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"shipping_address.zip\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "shipping_address.zip"
+    },
+    {
+      "id": "ecommerce_shipping_address.country_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"shipping_address.country\"?",
+      "answer": "USA",
+      "type": "string",
+      "path": "shipping_address.country"
+    },
+    {
+      "id": "ecommerce_shipping_address.country_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"shipping_address.country\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "shipping_address.country"
+    },
+    {
+      "id": "ecommerce_billing_address_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"billing_address\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "billing_address"
+    },
+    {
+      "id": "ecommerce_billing_address.street_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"billing_address.street\"?",
+      "answer": "123 Main Street",
+      "type": "string",
+      "path": "billing_address.street"
+    },
+    {
+      "id": "ecommerce_billing_address.street_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"billing_address.street\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "billing_address.street"
+    },
+    {
+      "id": "ecommerce_billing_address.city_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"billing_address.city\"?",
+      "answer": "Los Angeles",
+      "type": "string",
+      "path": "billing_address.city"
+    },
+    {
+      "id": "ecommerce_billing_address.city_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"billing_address.city\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "billing_address.city"
+    },
+    {
+      "id": "ecommerce_billing_address.state_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"billing_address.state\"?",
+      "answer": "CA",
+      "type": "string",
+      "path": "billing_address.state"
+    },
+    {
+      "id": "ecommerce_billing_address.state_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"billing_address.state\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "billing_address.state"
+    },
+    {
+      "id": "ecommerce_billing_address.zip_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"billing_address.zip\"?",
+      "answer": "90001",
+      "type": "string",
+      "path": "billing_address.zip"
+    },
+    {
+      "id": "ecommerce_billing_address.zip_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"billing_address.zip\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "billing_address.zip"
+    },
+    {
+      "id": "ecommerce_billing_address.country_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"billing_address.country\"?",
+      "answer": "USA",
+      "type": "string",
+      "path": "billing_address.country"
+    },
+    {
+      "id": "ecommerce_billing_address.country_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"billing_address.country\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "billing_address.country"
+    },
+    {
+      "id": "ecommerce_items_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"items\"?",
+      "answer": "array",
+      "type": "string",
+      "path": "items"
+    },
+    {
+      "id": "ecommerce_items_count",
+      "dataset": "ecommerce",
+      "question": "How many items are in \"items\"?",
+      "answer": 3,
+      "type": "number",
+      "path": "items"
+    },
+    {
+      "id": "ecommerce_items_first",
+      "dataset": "ecommerce",
+      "question": "What is the first item in \"items\"?",
+      "answer": {
+        "sku": "WIDGET-001",
+        "name": "Premium Widget",
+        "quantity": 2,
+        "unit_price": 29.99,
+        "total": 59.98,
+        "tax": 5.4,
+        "discount": 0
+      },
+      "type": "object",
+      "path": "items"
+    },
+    {
+      "id": "ecommerce_items_last",
+      "dataset": "ecommerce",
+      "question": "What is the last item in \"items\"?",
+      "answer": {
+        "sku": "CABLE-USB-C",
+        "name": "USB-C Cable 6ft",
+        "quantity": 3,
+        "unit_price": 12.99,
+        "total": 38.97,
+        "tax": 3.51,
+        "discount": 0
+      },
+      "type": "object",
+      "path": "items"
+    },
+    {
+      "id": "ecommerce_items_fields",
+      "dataset": "ecommerce",
+      "question": "What fields does each item in \"items\" have?",
+      "answer": [
+        "sku",
+        "name",
+        "quantity",
+        "unit_price",
+        "total",
+        "tax",
+        "discount"
+      ],
+      "type": "array",
+      "path": "items"
+    },
+    {
+      "id": "ecommerce_items_0_sku",
+      "dataset": "ecommerce",
+      "question": "What is the \"sku\" of the first item in \"items\"?",
+      "answer": "WIDGET-001",
+      "type": "string",
+      "path": "items[0].sku"
+    },
+    {
+      "id": "ecommerce_items_0_name",
+      "dataset": "ecommerce",
+      "question": "What is the \"name\" of the first item in \"items\"?",
+      "answer": "Premium Widget",
+      "type": "string",
+      "path": "items[0].name"
+    },
+    {
+      "id": "ecommerce_items_0_quantity",
+      "dataset": "ecommerce",
+      "question": "What is the \"quantity\" of the first item in \"items\"?",
+      "answer": 2,
+      "type": "number",
+      "path": "items[0].quantity"
+    },
+    {
+      "id": "ecommerce_items_find_sku",
+      "dataset": "ecommerce",
+      "question": "Find the item in \"items\" where \"sku\" equals \"WIDGET-001\". What is this item?",
+      "answer": {
+        "sku": "WIDGET-001",
+        "name": "Premium Widget",
+        "quantity": 2,
+        "unit_price": 29.99,
+        "total": 59.98,
+        "tax": 5.4,
+        "discount": 0
+      },
+      "type": "object",
+      "path": "items[0]"
+    },
+    {
+      "id": "ecommerce_subtotal_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"subtotal\"?",
+      "answer": 248.94,
+      "type": "number",
+      "path": "subtotal"
+    },
+    {
+      "id": "ecommerce_subtotal_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"subtotal\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "subtotal"
+    },
+    {
+      "id": "ecommerce_tax_total_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"tax_total\"?",
+      "answer": 22.41,
+      "type": "number",
+      "path": "tax_total"
+    },
+    {
+      "id": "ecommerce_tax_total_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"tax_total\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "tax_total"
+    },
+    {
+      "id": "ecommerce_discount_total_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"discount_total\"?",
+      "answer": 15,
+      "type": "number",
+      "path": "discount_total"
+    },
+    {
+      "id": "ecommerce_discount_total_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"discount_total\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "discount_total"
+    },
+    {
+      "id": "ecommerce_shipping_cost_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"shipping_cost\"?",
+      "answer": 9.99,
+      "type": "number",
+      "path": "shipping_cost"
+    },
+    {
+      "id": "ecommerce_shipping_cost_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"shipping_cost\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "shipping_cost"
+    },
+    {
+      "id": "ecommerce_grand_total_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"grand_total\"?",
+      "answer": 266.34,
+      "type": "number",
+      "path": "grand_total"
+    },
+    {
+      "id": "ecommerce_grand_total_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"grand_total\"?",
+      "answer": "number",
+      "type": "string",
+      "path": "grand_total"
+    },
+    {
+      "id": "ecommerce_payment_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"payment\"?",
+      "answer": "object",
+      "type": "string",
+      "path": "payment"
+    },
+    {
+      "id": "ecommerce_payment.method_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"payment.method\"?",
+      "answer": "credit_card",
+      "type": "string",
+      "path": "payment.method"
+    },
+    {
+      "id": "ecommerce_payment.method_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"payment.method\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "payment.method"
+    },
+    {
+      "id": "ecommerce_payment.last_four_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"payment.last_four\"?",
+      "answer": "4242",
+      "type": "string",
+      "path": "payment.last_four"
+    },
+    {
+      "id": "ecommerce_payment.last_four_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"payment.last_four\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "payment.last_four"
+    },
+    {
+      "id": "ecommerce_payment.transaction_id_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"payment.transaction_id\"?",
+      "answer": "txn_1234567890",
+      "type": "string",
+      "path": "payment.transaction_id"
+    },
+    {
+      "id": "ecommerce_payment.transaction_id_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"payment.transaction_id\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "payment.transaction_id"
+    },
+    {
+      "id": "ecommerce_payment.status_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"payment.status\"?",
+      "answer": "completed",
+      "type": "string",
+      "path": "payment.status"
+    },
+    {
+      "id": "ecommerce_payment.status_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"payment.status\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "payment.status"
+    },
+    {
+      "id": "ecommerce_status_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"status\"?",
+      "answer": "processing",
+      "type": "string",
+      "path": "status"
+    },
+    {
+      "id": "ecommerce_status_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"status\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "status"
+    },
+    {
+      "id": "ecommerce_created_at_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"created_at\"?",
+      "answer": "2024-01-15T10:30:00Z",
+      "type": "string",
+      "path": "created_at"
+    },
+    {
+      "id": "ecommerce_created_at_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"created_at\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "created_at"
+    },
+    {
+      "id": "ecommerce_updated_at_value",
+      "dataset": "ecommerce",
+      "question": "What is the value of \"updated_at\"?",
+      "answer": "2024-01-15T10:35:00Z",
+      "type": "string",
+      "path": "updated_at"
+    },
+    {
+      "id": "ecommerce_updated_at_type",
+      "dataset": "ecommerce",
+      "question": "What type is \"updated_at\"?",
+      "answer": "string",
+      "type": "string",
+      "path": "updated_at"
+    }
+  ],
+  "employees": [
+    {
+      "id": "employees_data_count",
+      "dataset": "employees",
+      "question": "How many items are in \"data\"?",
+      "answer": 10,
+      "type": "number",
+      "path": "data"
+    },
+    {
+      "id": "employees_data_first",
+      "dataset": "employees",
+      "question": "What is the first item in \"data\"?",
+      "answer": {
+        "id": 1,
+        "name": "Alice Smith",
+        "department": "Engineering",
+        "salary": 95000,
+        "start_date": "2020-01-15",
+        "active": true,
+        "email": "alice.smith@company.com",
+        "skills": [
+          "Python",
+          "JavaScript",
+          "SQL"
+        ],
+        "manager_id": 42,
+        "location": "San Francisco"
+      },
+      "type": "object",
+      "path": "data"
+    },
+    {
+      "id": "employees_data_last",
+      "dataset": "employees",
+      "question": "What is the last item in \"data\"?",
+      "answer": {
+        "id": 10,
+        "name": "Jack Anderson",
+        "department": "Sales",
+        "salary": 90000,
+        "start_date": "2019-12-01",
+        "active": true,
+        "email": "jack.anderson@company.com",
+        "skills": [
+          "Enterprise",
+          "SaaS",
+          "Contracts"
+        ],
+        "manager_id": 55,
+        "location": "Boston"
+      },
+      "type": "object",
+      "path": "data"
+    },
+    {
+      "id": "employees_data_fields",
+      "dataset": "employees",
+      "question": "What fields does each item in \"data\" have?",
+      "answer": [
+        "id",
+        "name",
+        "department",
+        "salary",
+        "start_date",
+        "active",
+        "email",
+        "skills",
+        "manager_id",
+        "location"
+      ],
+      "type": "array",
+      "path": "data"
+    },
+    {
+      "id": "employees_data_0_id",
+      "dataset": "employees",
+      "question": "What is the \"id\" of the first item in \"data\"?",
+      "answer": 1,
+      "type": "number",
+      "path": "data[0].id"
+    },
+    {
+      "id": "employees_data_0_name",
+      "dataset": "employees",
+      "question": "What is the \"name\" of the first item in \"data\"?",
+      "answer": "Alice Smith",
+      "type": "string",
+      "path": "data[0].name"
+    },
+    {
+      "id": "employees_data_0_department",
+      "dataset": "employees",
+      "question": "What is the \"department\" of the first item in \"data\"?",
+      "answer": "Engineering",
+      "type": "string",
+      "path": "data[0].department"
+    },
+    {
+      "id": "employees_data_find_id",
+      "dataset": "employees",
+      "question": "Find the item in \"data\" where \"id\" equals \"1\". What is this item?",
+      "answer": {
+        "id": 1,
+        "name": "Alice Smith",
+        "department": "Engineering",
+        "salary": 95000,
+        "start_date": "2020-01-15",
+        "active": true,
+        "email": "alice.smith@company.com",
+        "skills": [
+          "Python",
+          "JavaScript",
+          "SQL"
+        ],
+        "manager_id": 42,
+        "location": "San Francisco"
+      },
+      "type": "object",
+      "path": "data[0]"
+    }
+  ]
+}

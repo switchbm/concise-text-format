@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "Alice Smith",
+    "department": "Engineering",
+    "salary": 95000,
+    "start_date": "2020-01-15",
+    "active": true,
+    "email": "alice.smith@company.com",
+    "skills": ["Python", "JavaScript", "SQL"],
+    "manager_id": 42,
+    "location": "San Francisco"
+  },
+  {
+    "id": 2,
+    "name": "Bob Johnson",
+    "department": "Engineering",
+    "salary": 98000,
+    "start_date": "2019-03-22",
+    "active": true,
+    "email": "bob.johnson@company.com",
+    "skills": ["Java", "Kotlin", "Docker"],
+    "manager_id": 42,
+    "location": "San Francisco"
+  },
+  {
+    "id": 3,
+    "name": "Charlie Davis",
+    "department": "Engineering",
+    "salary": 92000,
+    "start_date": "2021-07-10",
+    "active": true,
+    "email": "charlie.davis@company.com",
+    "skills": ["Go", "Kubernetes", "Terraform"],
+    "manager_id": 42,
+    "location": "New York"
+  },
+  {
+    "id": 4,
+    "name": "Diana Martinez",
+    "department": "Sales",
+    "salary": 85000,
+    "start_date": "2018-11-05",
+    "active": true,
+    "email": "diana.martinez@company.com",
+    "skills": ["Salesforce", "CRM", "Negotiation"],
+    "manager_id": 55,
+    "location": "Chicago"
+  },
+  {
+    "id": 5,
+    "name": "Eve Wilson",
+    "department": "Sales",
+    "salary": 87000,
+    "start_date": "2020-02-14",
+    "active": false,
+    "email": "eve.wilson@company.com",
+    "skills": ["B2B", "Pipeline", "Analytics"],
+    "manager_id": 55,
+    "location": "Chicago"
+  },
+  {
+    "id": 6,
+    "name": "Frank Thomas",
+    "department": "Marketing",
+    "salary": 78000,
+    "start_date": "2021-01-20",
+    "active": true,
+    "email": "frank.thomas@company.com",
+    "skills": ["SEO", "Content", "Analytics"],
+    "manager_id": 67,
+    "location": "Austin"
+  },
+  {
+    "id": 7,
+    "name": "Grace Lee",
+    "department": "Marketing",
+    "salary": 81000,
+    "start_date": "2019-09-12",
+    "active": true,
+    "email": "grace.lee@company.com",
+    "skills": ["Social Media", "Design", "Campaigns"],
+    "manager_id": 67,
+    "location": "Austin"
+  },
+  {
+    "id": 8,
+    "name": "Henry Brown",
+    "department": "Engineering",
+    "salary": 105000,
+    "start_date": "2017-05-30",
+    "active": true,
+    "email": "henry.brown@company.com",
+    "skills": ["Rust", "Systems", "Performance"],
+    "manager_id": 42,
+    "location": "Seattle"
+  },
+  {
+    "id": 9,
+    "name": "Iris Chen",
+    "department": "Engineering",
+    "salary": 99000,
+    "start_date": "2020-08-19",
+    "active": true,
+    "email": "iris.chen@company.com",
+    "skills": ["React", "TypeScript", "GraphQL"],
+    "manager_id": 42,
+    "location": "San Francisco"
+  },
+  {
+    "id": 10,
+    "name": "Jack Anderson",
+    "department": "Sales",
+    "salary": 90000,
+    "start_date": "2019-12-01",
+    "active": true,
+    "email": "jack.anderson@company.com",
+    "skills": ["Enterprise", "SaaS", "Contracts"],
+    "manager_id": 55,
+    "location": "Boston"
+  }
+]

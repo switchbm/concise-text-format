@@ -1,0 +1,52 @@
+{
+  "name": "ctf-format",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Compressed Text Format - Ultra-efficient data serialization for LLM prompts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ctf-format/ctf.git"
+  },
+  "keywords": [
+    "serialization",
+    "llm",
+    "data-format",
+    "compression",
+    "tokens"
+  ],
+  "author": "CTF Format Team",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=packages/ctf-core && npm run build --workspace=packages/ctf-cli",
+    "test": "npm run test --workspace=packages/ctf-core",
+    "test:coverage": "npm run test:coverage --workspace=packages/ctf-core",
+    "lint": "eslint packages/**/src/**/*.ts",
+    "format": "prettier --write \"packages/**/src/**/*.ts\"",
+    "benchmark": "node benchmarks/scripts/token-count.js",
+    "benchmark:real": "node benchmarks/scripts/real-token-count.js",
+    "llm:test": "node benchmarks/llm-tests/runner.js",
+    "llm:test:openai": "node benchmarks/llm-tests/runner.js openai",
+    "llm:test:anthropic": "node benchmarks/llm-tests/runner.js anthropic",
+    "llm:test:judge": "node benchmarks/llm-tests/runner.js openai config 10 --judge",
+    "llm:test:both": "node benchmarks/llm-tests/runner.js openai config 10 --both",
+    "llm:questions": "node benchmarks/llm-tests/generate-questions.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "gpt-tokenizer": "^3.4.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
