@@ -1,4 +1,4 @@
-"""Command-line interface for CTF format."""
+"""Command-line interface for CTF."""
 
 import sys
 import json
@@ -20,7 +20,7 @@ def main() -> None:
     subparsers = parser.add_subparsers(dest="command", help="Command to execute")
 
     # Encode command
-    encode_parser = subparsers.add_parser("encode", help="Encode JSON to CTF format")
+    encode_parser = subparsers.add_parser("encode", help="Encode JSON to CTF")
     encode_parser.add_argument("input", help="Input JSON file (use - for stdin)")
     encode_parser.add_argument("-o", "--output", help="Output file (default: stdout)")
     encode_parser.add_argument(

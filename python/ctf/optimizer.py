@@ -1,4 +1,4 @@
-"""Auto-optimization for CTF format."""
+"""Auto-optimization for CTF."""
 
 from typing import Any, Literal, Dict
 from ctf.types import JsonValue

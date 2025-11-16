@@ -1,4 +1,4 @@
-"""CTF Encoder - Convert JSON to CTF format."""
+"""CTF Encoder - Convert JSON to CTF."""
 
 from typing import Any, Optional
 from ctf.types import JsonValue, EncodeOptions
@@ -9,21 +9,21 @@ from ctf.optimizer import Optimizer
 
 def encode(value: JsonValue, options: Optional[EncodeOptions] = None) -> str:
     """
-    Encode JSON value to CTF format.
+    Encode JSON value to CTF.
 
     Args:
         value: JSON value to encode
         options: Encoding options
 
     Returns:
-        CTF formatted string
+        CTF string
     """
     encoder = CTFEncoder(options or {})
     return encoder.encode(value)
 
 
 class CTFEncoder:
-    """Encoder for converting JSON to CTF format."""
+    """Encoder for converting JSON to CTF."""
 
     def __init__(self, options: EncodeOptions) -> None:
         """
@@ -44,7 +44,7 @@ class CTFEncoder:
 
     def encode(self, value: JsonValue) -> str:
         """
-        Encode value to CTF format.
+        Encode value to CTF.
 
         Args:
             value: Value to encode

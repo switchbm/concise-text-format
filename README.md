@@ -296,7 +296,7 @@ See [benchmarks/README.md](benchmarks/README.md) for detailed results.
 
 ### encode(value, options?)
 
-Encode a JSON value to CTF format.
+Encode a JSON value to CTF.
 
 ```typescript
 function encode(value: JsonValue, options?: EncodeOptions): string
@@ -313,7 +313,7 @@ interface EncodeOptions {
 
 ### decode(input, options?)
 
-Decode CTF format to JSON.
+Decode CTF to JSON.
 
 ```typescript
 function decode(input: string, options?: DecodeOptions): JsonValue
@@ -395,7 +395,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## License
 
-MIT © CTF Format Team
+MIT © CTF Team
 
 ## Acknowledgments
 

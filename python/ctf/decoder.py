@@ -1,4 +1,4 @@
-"""CTF Decoder - Convert CTF format to JSON."""
+"""CTF Decoder - Convert CTF to JSON."""
 
 import re
 from typing import Any, Optional
@@ -9,10 +9,10 @@ from ctf.references import ReferenceManager
 
 def decode(input_str: str, options: Optional[DecodeOptions] = None) -> JsonValue:
     """
-    Decode CTF format to JSON value.
+    Decode CTF to JSON value.
 
     Args:
-        input_str: CTF formatted string
+        input_str: CTF string
         options: Decoding options
 
     Returns:
@@ -26,7 +26,7 @@ def decode(input_str: str, options: Optional[DecodeOptions] = None) -> JsonValue
 
 
 class ParseContext:
-    """Context for parsing CTF format."""
+    """Context for parsing CTF."""
 
     def __init__(self, lines: list[str]) -> None:
         """Initialize parse context."""
@@ -35,7 +35,7 @@ class ParseContext:
 
 
 class CTFDecoder:
-    """Decoder for converting CTF format to JSON."""
+    """Decoder for converting CTF to JSON."""
 
     def __init__(self, options: DecodeOptions) -> None:
         """
@@ -54,7 +54,7 @@ class CTFDecoder:
         Decode CTF string to JSON value.
 
         Args:
-            input_str: CTF formatted string
+            input_str: CTF string
 
         Returns:
             Decoded JSON value

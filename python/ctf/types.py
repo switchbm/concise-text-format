@@ -1,4 +1,4 @@
-"""Type definitions for CTF format."""
+"""Type definitions for CTF."""
 
 from typing import Union, Dict, List, Any, Literal, TypedDict
 
@@ -10,7 +10,7 @@ JsonArray = List[JsonValue]
 
 
 class EncodeOptions(TypedDict, total=False):
-    """Options for encoding JSON to CTF format."""
+    """Options for encoding JSON to CTF."""
 
     indent: int  # Number of spaces for indentation (default: 2)
     delimiter: Literal[",", "|", "\t", "auto"]  # Delimiter for tabular arrays (default: "auto")
@@ -21,7 +21,7 @@ class EncodeOptions(TypedDict, total=False):
 
 
 class DecodeOptions(TypedDict, total=False):
-    """Options for decoding CTF format to JSON."""
+    """Options for decoding CTF to JSON."""
 
     strict: bool  # Strict validation mode (default: True)
     validate: bool  # Validate array lengths and constraints (default: True)

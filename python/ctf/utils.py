@@ -1,4 +1,4 @@
-"""Utility functions for CTF format."""
+"""Utility functions for CTF."""
 
 import re
 from typing import Any
@@ -6,7 +6,7 @@ from typing import Any
 
 def needs_quoting(s: str) -> bool:
     """
-    Check if a string needs to be quoted in CTF format.
+    Check if a string needs to be quoted in CTF.
 
     Args:
         s: String to check
@@ -22,7 +22,7 @@ def needs_quoting(s: str) -> bool:
 
 def escape_string(s: str) -> str:
     """
-    Escape a string for CTF format.
+    Escape a string for CTF.
 
     Args:
         s: String to escape
@@ -40,7 +40,7 @@ def escape_string(s: str) -> str:
 
 def unescape_string(s: str) -> str:
     """
-    Unescape a quoted string from CTF format.
+    Unescape a quoted string from CTF.
 
     Args:
         s: String to unescape (may include quotes)
@@ -88,7 +88,7 @@ def get_indent_level(line: str, indent_size: int = 2) -> int:
 
 def parse_inline_array(value: str) -> list[Any]:
     """
-    Parse an inline array from CTF format.
+    Parse an inline array from CTF.
 
     Format: [value1 value2 value3]
 

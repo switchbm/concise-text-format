@@ -205,7 +205,7 @@ encode(data, {"references": True})
 
 ### encode(value, options=None)
 
-Encode a Python value to CTF format.
+Encode a Python value to CTF.
 
 ```python
 from ctf import encode
@@ -225,11 +225,11 @@ result = encode(
 - `value`: Any JSON-serializable Python value (dict, list, str, int, float, bool, None)
 - `options`: Optional `EncodeOptions` dict (see above)
 
-**Returns:** CTF formatted string
+**Returns:** CTF string
 
 ### decode(input_str, options=None)
 
-Decode CTF format to Python value.
+Decode CTF to Python value.
 
 ```python
 from ctf import decode
@@ -244,7 +244,7 @@ result = decode(
 ```
 
 **Parameters:**
-- `input_str`: CTF formatted string
+- `input_str`: CTF string
 - `options`: Optional `DecodeOptions` dict
 
 **Returns:** Decoded Python value
@@ -444,7 +444,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](../CONTRIBUTING.md) for g
 
 ## License
 
-MIT © CTF Format Team
+MIT © CTF Team
 
 ## Acknowledgments
 

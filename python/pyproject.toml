@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "CTF Format Team"}
+    {name = "CTF Team"}
 ]
 keywords = ["serialization", "llm", "data-format", "compression", "tokens"]
 classifiers = [
