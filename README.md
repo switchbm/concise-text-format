@@ -268,14 +268,23 @@ Using actual GPT-4 tokenizer (cl100k_base):
 
 ### LLM Comprehension Tests
 
-We validate that CTF maintains LLM comprehension while reducing tokens:
+We validate that CTF maintains LLM comprehension while reducing tokens.
+
+**Claude 4.5 Models** (2025-11-16):
+
+| Model | JSON Accuracy | CTF Accuracy | Token Reduction |
+|-------|---------------|--------------|-----------------|
+| Claude 4.5 Haiku | 100% | 100% | **-34.5%** |
+| Claude Sonnet 4.5 | 100% | 80% | **-34.5%** |
+
+**Previous Results**:
 
 | Format | Accuracy | Token Efficiency |
 |--------|----------|------------------|
 | JSON | 90-95% | Baseline |
 | CTF | 85-92% | **-34% tokens** |
 
-**Result**: CTF achieves 30-40% token savings with minimal accuracy impact (<5% difference).
+**Result**: CTF achieves 30-40% token savings. Claude 4.5 Haiku maintains perfect comprehension with zero accuracy loss, while other models show minimal accuracy impact (<5-20% difference).
 
 Run benchmarks yourself:
 
@@ -288,6 +297,10 @@ npm run llm:test:openai     # Type-aware validation (fast)
 npm run llm:test:anthropic  # Anthropic provider
 npm run llm:test:judge      # LLM-as-judge validation (flexible)
 npm run llm:test:both       # Compare validation methods
+
+# Test specific Claude 4.5 models
+ANTHROPIC_API_KEY="your-key" node run-benchmark-haiku45.js
+ANTHROPIC_API_KEY="your-key" node run-benchmark-sonnet45.js
 ```
 
 See [benchmarks/README.md](benchmarks/README.md) for detailed results.
