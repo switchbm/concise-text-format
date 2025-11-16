@@ -21,8 +21,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
-    "test": "npm run test --workspaces",
+    "build": "npm run build --workspace=packages/ctf-core && npm run build --workspace=packages/ctf-cli",
+    "test": "npm run test --workspace=packages/ctf-core",
+    "test:coverage": "npm run test:coverage --workspace=packages/ctf-core",
     "lint": "eslint packages/**/src/**/*.ts",
     "format": "prettier --write \"packages/**/src/**/*.ts\"",
     "benchmark": "node benchmarks/scripts/token-count.js",
