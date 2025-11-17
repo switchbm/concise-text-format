@@ -42,6 +42,10 @@ npm run llm:test:anthropic     # Test with Anthropic
 npm run llm:test:judge         # Test with LLM-as-judge validation
 npm run llm:test:both          # Compare type-aware vs LLM-judge
 
+# Test specific Claude 4.5 models
+ANTHROPIC_API_KEY="sk-ant-..." node run-benchmark-haiku45.js
+ANTHROPIC_API_KEY="sk-ant-..." node run-benchmark-sonnet45.js
+
 # Generate questions only (no LLM calls)
 npm run llm:questions
 ```
@@ -56,7 +60,20 @@ The benchmarks measure:
 - **Estimated token count** - Using the heuristic of ~4 characters per token
 - **Savings percentage** - Reduction compared to formatted JSON
 
-## Expected Results
+## Results
+
+### Claude 4.5 Models (2025-11-16)
+
+Tested with config dataset (10 questions, 330 JSON tokens vs 216 CTF tokens):
+
+| Model | JSON Accuracy | CTF Accuracy | Token Reduction | Accuracy Change |
+|-------|---------------|--------------|-----------------|-----------------|
+| **Claude 4.5 Haiku** | 100% | **100%** | **-34.5%** | **0.0%** ✓ |
+| Claude Sonnet 4.5 | 100% | 80% | -34.5% | -20.0% |
+
+**Key Finding**: Claude 4.5 Haiku maintains perfect comprehension while achieving 34.5% token savings!
+
+### Expected Results (General)
 
 CTF format typically achieves:
 

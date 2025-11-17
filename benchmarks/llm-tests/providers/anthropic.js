@@ -52,8 +52,10 @@ export class AnthropicProvider extends BaseLLMProvider {
   }
 
   estimateCost(inputTokens, outputTokens, model) {
-    // Anthropic pricing (as of Nov 2024)
+    // Anthropic pricing (updated for Claude 4.5)
     const pricing = {
+      'claude-sonnet-4-5-20250929': { input: 3.00 / 1_000_000, output: 15.00 / 1_000_000 },
+      'claude-haiku-4-5-20251001': { input: 1.00 / 1_000_000, output: 5.00 / 1_000_000 },
       'claude-3-5-sonnet-20241022': { input: 3.00 / 1_000_000, output: 15.00 / 1_000_000 },
       'claude-3-5-haiku-20241022': { input: 0.80 / 1_000_000, output: 4.00 / 1_000_000 },
       'claude-3-opus-20240229': { input: 15.00 / 1_000_000, output: 75.00 / 1_000_000 },
